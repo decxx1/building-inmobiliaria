@@ -1,13 +1,14 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import ApplicationImagotipo from '@/Components/ApplicationImagotipo.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
         <div>
-            <Link href="/">
-                <ApplicationLogo class="w-80 h-auto" />
+            <Link href="/" class="flex ms-2 justify-center">
+                <ApplicationImagotipo heightClass="h-16" />
+                <span class="self-center md:text-xl font-semibold lg:text-2xl hidden md:block whitespace-nowrap dark:text-white">ManejoWeb</span>
             </Link>
         </div>
 
