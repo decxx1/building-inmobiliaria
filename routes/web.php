@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,8 +35,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Clients');
     })->name('clients');
 
-    Route::get('/users',[ProfileController::class, 'index'])->name('users');
-    Route::post('/users',[ProfileController::class, 'store'])->name('users.store');
+    Route::get('/users',[UserController::class, 'index'])->name('users');
+    Route::post('/users',[UserController::class, 'store'])->name('users.store');
+    Route::put('/users/{id}',[UserController::class, 'update'])->name('users.update');
+    Route::put('/users/password/{id}',[UserController::class, 'updatePassword'])->name('users.update.password');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

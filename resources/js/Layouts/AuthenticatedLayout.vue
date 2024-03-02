@@ -1,6 +1,7 @@
 <script setup>
 import NavBar from '@/Layouts/Partials/NavBar.vue';
 import Footer from '@/Layouts/Partials/Footer.vue';
+import { Toaster } from 'vue-sonner'
 import { onMounted } from 'vue'
 import {
     initDrawers,
@@ -22,7 +23,13 @@ onMounted(() => {
 
 <template>
     <div>
-
+        <Toaster
+            richColors
+            position="top-center"
+            :toastOptions="{
+                style: { top: '30px' },
+            }"
+        />
         <NavBar />
 
         <div class="p-4 sm:ml-64 ">
