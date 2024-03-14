@@ -26,11 +26,11 @@ defineProps ({
 <template>
     <div
         :id="drawerId"
-        class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
+        class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-surface-dark"
         tabindex="-1"
         :aria-labelledby="drawerId + '-label'"
     >
-        <h5 :id="drawerId + '-label'" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+        <h5 :id="drawerId + '-label'" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-white">
             <i :class="[icon, 'me-3']" ></i>
             {{title}}
         </h5>
@@ -41,7 +41,7 @@ defineProps ({
         <form @submit.prevent="onSubmit" class="mb-6">
             <slot />
 
-            <button type="submit" class="justify-center flex items-center text-md py-2.5 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <button type="submit" class="justify-center flex items-center text-md py-2.5 w-full text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:ring-blue-300 font-medium rounded-lg dark:bg-primary-dark dark:hover:bg-primary-hover focus:outline-none dark:focus:ring-blue-800">
                 <i :class="[icon, 'me-3 h-5 w-5']"></i>
                 {{title}}
             </button>

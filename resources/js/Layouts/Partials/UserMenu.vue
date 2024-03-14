@@ -8,7 +8,7 @@
             </div>
         </button>
     </div>
-    <div class="hidden z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+    <div class="hidden z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-background-dark dark:divide-surface-dark" id="dropdown-user">
         <div class="px-4 py-3" role="none">
             <p class="text-sm text-gray-900 dark:text-white" role="none">
                 {{ $page.props.auth.user.name }}

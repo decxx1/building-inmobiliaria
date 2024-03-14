@@ -106,4 +106,27 @@ class UserController extends Controller
         }
 
     }
+
+    public function destroy(Request $request, int $id): RedirectResponse
+    {
+        if(!$id){
+            return redirect()->back()->withErrors([
+                'message' => 'No se encontró el usuario'
+            ]);
+        }
+        $user = User::findOrFail($id);
+
+        try{
+            //$this->authorize('update', $user);
+            $user->delete();
+
+            return Redirect::route('users');
+        } catch (\Exception $e){
+            return redirect()->back()->withErrors([
+                'message' => 'Error al eliminar usuario',
+                'error' => $e
+            ]);
+        }
+
+    }
 }

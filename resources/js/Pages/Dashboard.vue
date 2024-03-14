@@ -9,11 +9,11 @@ import { Head } from '@inertiajs/vue3';
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">Dashboard</h2>
         </template>
 
         <Card>
-            <div class="text-gray-900 dark:text-gray-100">You're logged in!</div>
+            <div class="text-gray-900 dark:text-white">You're logged in!</div>
         </Card>
     </AuthenticatedLayout>
 </template>
