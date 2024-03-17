@@ -3,18 +3,15 @@ import NavBar from '@/Layouts/Partials/NavBar.vue';
 import Footer from '@/Layouts/Partials/Footer.vue';
 import { Toaster } from 'vue-sonner';
 import { onMounted } from 'vue';
+import { store } from '@/Services/store.js';
 import {
     initDrawers,
     initDropdowns,
     initModals,
     initPopovers,
-    initTooltips } from 'flowbite';
+    initTooltips,
+} from 'flowbite';
 
-import { useStore } from '@nanostores/vue';
-import { storeSidebarCompact } from '@/Services/store.js';
-const sidebarCompact = useStore(storeSidebarCompact);
-
-// initialize components based on data attribute selectors
 onMounted(() => {
     initDrawers();
     initDropdowns();
@@ -36,7 +33,7 @@ onMounted(() => {
         />
         <NavBar />
 
-        <div :class="[sidebarCompact ? 'sm:ml-20' : 'sm:ml-64','p-4 transition-all ease-in duration-300']">
+        <div :class="[store.sidebarCompact ? 'sm:ml-20' : 'sm:ml-64','p-4 transition-all ease-in duration-300']">
             <!-- Page Heading -->
             <header class="bg-white dark:bg-surface-dark shadow" v-if="$slots.header">
                 <div class="max-w-screen-2xl mx-auto pb-6 pt-16 px-4 sm:px-6 lg:px-8">

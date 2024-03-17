@@ -1,3 +1,6 @@
-import { atom } from 'nanostores';
+import { reactive } from 'vue';
 
-export const storeSidebarCompact = atom(false);
+export const store = reactive({
+    sidebarCompact:false,
+    mouseOver:false,
+});

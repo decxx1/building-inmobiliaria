@@ -21,10 +21,8 @@
     },
     "dependencies": {
         "@iconify/json": "^2.2.185",
-        "@nanostores/vue": "^0.10.0",
         "flowbite": "^2.3.0",
         "flowbite-vue": "^0.1.2",
-        "nanostores": "^0.10.0",
         "vue-sonner": "^1.0.3"
     }
 }
