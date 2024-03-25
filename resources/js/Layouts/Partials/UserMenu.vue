@@ -2,7 +2,7 @@
   <div class="flex items-center ms-3">
     <div>
         <button type="button" class="flex items-center gap-4" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-            <img class="w-10 h-10 rounded-full elevation-2" :src="$page.props.auth.user.avatar ? $page.props.auth.user.avatar : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'" alt="user photo">
+            <img class="w-10 h-10 rounded-full elevation-2" :src="$page.props.auth.avatar" alt="user photo">
             <div class="text-gray-800 dark:text-white">
                 <div>{{ $page.props.auth.user.name }}</div>
             </div>

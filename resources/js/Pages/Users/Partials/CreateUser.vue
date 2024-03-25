@@ -22,7 +22,11 @@ const form = useForm({
 const handleCreateUser = () => {
     form.post(route('users.store'), {
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            toast.success('¡Usuario Creado!')
+            form.reset()
+            props.handleDrawerCreateToggle()
+        },
         onError: (error) => {
             //console.error(error)
             const { name, email, password } = form.errors;

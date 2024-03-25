@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
+use App\Models\Avatar;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -30,10 +31,21 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        //encontrar el avatar del usuario
+        $user = $request->user();
+
+        $avatar = 'avatar.webp';
+        if($user){
+            $userAvatar = Avatar::where('user_id', $user->id)->first();
+            $avatar = $userAvatar  ? $userAvatar->thumbnail : 'avatar.webp';
+        }
+
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'avatar' => $avatar,
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

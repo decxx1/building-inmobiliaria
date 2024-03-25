@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
+use App\Models\Avatar;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Redirect;
@@ -19,8 +20,15 @@ class UserController extends Controller
 {
     public function index():Response
     {
+        $users = User::all();
+        $AvatarController = new AvatarController();
+
+        foreach ($users as $user) {
+            $user->avatar = $AvatarController->get($user->id);
+        }
+
         return Inertia::render('Users/Index', [
-            'users' => User::all(),
+            'users' => $users,
         ]);
     }
 
@@ -67,7 +75,7 @@ class UserController extends Controller
         } catch (\Exception $e){
             return redirect()->back()->withErrors([
                 'message' => 'Error al actualizar usuario',
-                'error' => $e
+                'error' => $e->getMessage()
             ]);
         }
 
@@ -101,7 +109,7 @@ class UserController extends Controller
         } catch (\Exception $e){
             return redirect()->back()->withErrors([
                 'message' => 'Error al actualizar usuario',
-                'error' => $e
+                'error' => $e->getMessage()
             ]);
         }
 
@@ -114,17 +122,50 @@ class UserController extends Controller
                 'message' => 'No se encontró el usuario'
             ]);
         }
-        $user = User::findOrFail($id);
 
         try{
-            //$this->authorize('update', $user);
+            $user = User::findOrFail($id);
+            //eliminar carpeta de avatar
+            $dir = public_path('avatars/'.$id);
+            $controller = new Controller();
+            $controller->delTree($dir);
+
             $user->delete();
 
             return Redirect::route('users');
         } catch (\Exception $e){
             return redirect()->back()->withErrors([
                 'message' => 'Error al eliminar usuario',
-                'error' => $e
+                'error' => $e->getMessage()
+            ]);
+        }
+
+    }
+
+    public function updateAvatar(Request $request, int $id): RedirectResponse
+    {
+        if(!$id){
+            return redirect()->back()->withErrors([
+                'message' => 'No se encontró el usuario'
+            ]);
+        }
+
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:3072',
+        ]);
+
+        try{
+            $user = User::findOrFail($id);
+            if($request->hasFile('image')){
+                $avatar = new AvatarController();
+                $avatar->upload($request, $user->id);
+            }
+
+            return Redirect::route('users');
+        } catch (\Exception $e){
+            return redirect()->back()->withErrors([
+                'message' => 'Error al actualizar imagen',
+                'error' => $e->getMessage()
             ]);
         }
 

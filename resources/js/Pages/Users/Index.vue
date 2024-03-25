@@ -5,8 +5,8 @@ import CreateUser from '@/Pages/Users/Partials/CreateUser.vue';
 import EditUser from '@/Pages/Users/Partials/EditUser.vue';
 import ChangePassword from '@/Pages/Users/Partials/ChangePassword.vue';
 import DeleteUser from '@/Pages/Users/Partials/DeleteUser.vue';
-import EditAvatar from '@/Pages/Users/Partials/EditAvatar.vue';
-import { Head } from '@inertiajs/vue3';
+import { toast } from 'vue-sonner'
+import { Head, useForm } from '@inertiajs/vue3';
 import ButtonIcon from '@/Components/ButtonIcon.vue';
 import Card from '@/Components/Card.vue';
 import { ref, onMounted } from 'vue';
@@ -20,12 +20,10 @@ defineProps({
 
 const userToEdit = ref({});
 const drawerEdit = ref(null);
-const drawerAvatar = ref(null);
 const drawerCreate = ref(null);
 const drawerPassword = ref(null);
 const modalDelete = ref(null);
 const drawerEditId = 'user-edit';
-const drawerAvatarId = 'user-avatar';
 const drawerCreateId = 'user-create';
 const drawerPasswordId = 'user-password-change';
 const modalDeleteId = 'user-delete';
@@ -57,18 +55,36 @@ const handleOpenModalDelete = (user) => {
 const handleCloseModalDelete = () => {
     modalDelete.value.hide();
 }
-const handleOpenDrawerAvatar = (user) => {
-    userToEdit.value = user;
-    drawerAvatar.value.show();
+
+const form = useForm({
+    image: null,
+});
+const handleFileChange = (event, user) => {
+    form.image = event.target.files[0];
+    // console.log(event.target.files[0])
+    // console.log(user)
+    handleEditAvatar(user);
 }
-const handleDrawerAvatarToggle = () => {
-    drawerAvatar.value.toggle();
+const handleEditAvatar = (user) => {
+    form.post(route('users.avatar', { id: user.id }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success('¡Imagen actualizada!')
+            form.reset();
+        },
+        onError: (error) => {
+            console.error(error)
+            const { image } = form.errors;
+            if (image) {
+                toast.warning(image)
+            }
+        },
+    });
 }
 onMounted(() => {
     // set the drawer menu element
     const targetDrawerCreate = document.getElementById(drawerCreateId);
     const targetDrawerEdit = document.getElementById(drawerEditId);
-    const targetDrawerAvatar = document.getElementById(drawerAvatarId);
     const targetDrawerPassword = document.getElementById(drawerPasswordId);
     // set the modal menu element
     const targetModalDelete = document.getElementById(modalDeleteId);
@@ -98,7 +114,6 @@ onMounted(() => {
 
     };
 
-    drawerAvatar.value = new Drawer(targetDrawerAvatar, options);
     drawerEdit.value = new Drawer(targetDrawerEdit, options);
     drawerCreate.value = new Drawer(targetDrawerCreate, options);
     drawerPassword.value = new Drawer(targetDrawerPassword, options);
@@ -125,17 +140,16 @@ onMounted(() => {
         </Card>
 
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 justify-items-center">
-                <CardUser v-for="user in users"
-                    :user="user"
-                    :key="user.id"
-                    :handleOpenDrawerEdit="handleOpenDrawerEdit"
-                    :handleOpenDrawerPassword="handleOpenDrawerPassword"
-                    :handleOpenModalDelete="handleOpenModalDelete"
-                    :handleOpenDrawerAvatar="handleOpenDrawerAvatar"
-                />
-            </div>
-
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center">
+            <CardUser v-for="user in users"
+                :user="user"
+                :key="user.id"
+                :handleOpenDrawerEdit="handleOpenDrawerEdit"
+                :handleOpenDrawerPassword="handleOpenDrawerPassword"
+                :handleOpenModalDelete="handleOpenModalDelete"
+                :handleFileChange="handleFileChange"
+            />
+        </div>
 
         <CreateUser
             :drawerId="drawerCreateId"
@@ -146,12 +160,6 @@ onMounted(() => {
             :user="userToEdit"
             :drawerId="drawerEditId"
             :handleDrawerEditToggle="handleDrawerEditToggle"
-        />
-
-        <EditAvatar
-            :user="userToEdit"
-            :drawerId="drawerAvatarId"
-            :handleDrawerAvatarToggle="handleDrawerAvatarToggle"
         />
 
         <ChangePassword
@@ -165,7 +173,6 @@ onMounted(() => {
             :modalId="modalDeleteId"
             :handleCloseModalDelete="handleCloseModalDelete"
         />
-
 
     </AuthenticatedLayout>
 </template>

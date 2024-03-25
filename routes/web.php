@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/users/{id}',[UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}',[UserController::class, 'destroy'])->name('users.destroy');
     Route::put('/users/password/{id}',[UserController::class, 'updatePassword'])->name('users.update.password');
+    Route::post('/users/avatar/{id}',[UserController::class, 'updateAvatar'])->name('users.avatar');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

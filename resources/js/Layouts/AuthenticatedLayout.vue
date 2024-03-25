@@ -26,7 +26,7 @@ onMounted(() => {
     <div>
         <Toaster
             richColors
-            position="top-center"
+            position="top-right"
             :toastOptions="{
                 style: { top: '30px' },
             }"

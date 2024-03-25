@@ -41,11 +41,13 @@ const handleEditUser = () => {
         },
         onError: (error) => {
             //console.error(error)
-            const { name, email } = form.errors;
+            const { name, email, password } = form.errors;
             if (name) {
                 toast.warning(name)
             }else if (email) {
                 toast.warning(email)
+            }else if (password) {
+                toast.warning(password)
             }else if (error.message){
                 toast.warning(error.message)
             }
