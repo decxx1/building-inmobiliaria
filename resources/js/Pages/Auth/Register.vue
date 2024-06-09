@@ -103,7 +103,7 @@ const submit = () => {
             :disabled="form.processing"
             type="submit"
             value="Crear cuenta"
-            class="w-40 h-12 text-sm md:text-base bg-primary dark:bg-primary-dark hover:bg-primary-hover rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase"
+            class="w-40 h-12 text-sm md:text-base bg-primary-600 hover:bg-primary-500 dark:bg-primary-800 dark:hover:bg-primary-700 rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase"
         />
 
     </form>

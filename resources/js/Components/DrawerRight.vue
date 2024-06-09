@@ -41,7 +41,7 @@ defineProps ({
         <form @submit.prevent="onSubmit" class="mb-6">
             <slot />
 
-            <button type="submit" class="justify-center flex items-center text-md py-2.5 w-full text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:ring-blue-300 font-medium rounded-lg dark:bg-primary-dark dark:hover:bg-primary-hover focus:outline-none dark:focus:ring-blue-800">
+            <button type="submit" class="justify-center flex items-center text-md py-2.5 w-full text-white bg-primary-600 hover:bg-primary-500 focus:ring-4 focus:ring-blue-400 font-medium rounded-lg dark:bg-primary-800 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-700">
                 <i :class="[icon, 'me-3 h-5 w-5']"></i>
                 {{title}}
             </button>

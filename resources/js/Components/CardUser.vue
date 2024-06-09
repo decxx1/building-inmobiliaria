@@ -72,7 +72,7 @@ const props = defineProps({
                 <form method="post" enctype="multipart/form-data" >
                     <label
                         :for="'inputAvatar' + user.id"
-                        class="cursor-pointer inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-centerme-2 dark:bg-primary-dark dark:hover:bg-blue-800 dark:focus:ring-blue-800"
+                        class="cursor-pointer inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-primary-600 hover:bg-primary-500 focus:ring-4 focus:outline-none focus:ring-blue-400 rounded-lg text-centerme-2 dark:bg-primary-800 dark:hover:bg-primary-700 dark:focus:ring-blue-700"
                     >
                     Cambiar Avatar
                     </label>

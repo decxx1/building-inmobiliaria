@@ -52,7 +52,7 @@ const signInBtn = () => {
           <h3>¿No tienes cuenta?</h3>
           <p>Cree una cuenta nueva para poder utilizar el programa de stock.<br/>
             Pruébelo GRATIS no requiere tarjeta</p>
-          <button class="md:w-32 md:h-10 h-9 w-28 text-xs md:text-sm bg-transparent border-2 border-white hover:bg-primary dark:hover:bg-primary-dark hover:border-none rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase" @click="signUpBtn">Registrarse</button>
+          <button class="md:w-32 md:h-10 h-9 w-28 text-xs md:text-sm bg-transparent border-2 border-white hover:bg-primary-600 dark:hover:bg-primary-800 hover:border-none rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase" @click="signUpBtn">Registrarse</button>
         </div>
         <br/>
       </div>
@@ -61,7 +61,7 @@ const signInBtn = () => {
         <div class="content">
           <h3>¿Ya tiene una cuenta?</h3>
           <p>Si se registró con anterioridad, inicie sesión con sus datos</p>
-          <button class="md:w-32 md:h-10 h-9 w-28 text-xs md:text-sm bg-transparent border-2 border-white hover:bg-primary dark:hover:bg-primary-dark hover:border-none rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase" @click="signInBtn">Iniciar sesión</button>
+          <button class="md:w-32 md:h-10 h-9 w-28 text-xs md:text-sm bg-transparent border-2 border-white hover:bg-primary-600 dark:hover:bg-primary-800 hover:border-none rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase" @click="signInBtn">Iniciar sesión</button>
         </div>
         <br/>
       </div>

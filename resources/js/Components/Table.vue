@@ -84,7 +84,7 @@ const props = defineProps ({
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-white uppercase bg-primary dark:bg-primary-dark">
+                    <thead class="text-xs text-white uppercase bg-primary-600 dark:bg-primary-800">
                         <tr>
                             <th
                                 scope="col"

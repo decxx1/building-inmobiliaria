@@ -1,11 +1,21 @@
 <script setup>
+import { computed } from 'vue';
 const props = defineProps ({
     colorHeader:{
         type: String,
         default: 'primary'
     }
 })
-let headerClass = `bg-${props.colorHeader} text-white dark:bg-${props.colorHeader}-dark`;
+const headerClass = computed(() => {
+    return {
+        'primary': 'bg-primary-600 text-white dark:bg-primary-800',
+        'secondary': 'bg-secondary-600 text-white dark:bg-secondary-800',
+        'info': 'bg-info-600 text-white dark:bg-info-800',
+        'warning': 'bg-warning-600 text-secondary-900 dark:bg-warning-800',
+        'danger': 'bg-danger-600 text-white dark:bg-danger-800',
+        'success': 'bg-success-600 text-white dark:bg-success-800',
+    }[props.colorHeader];
+});
 
 </script>
 <template>

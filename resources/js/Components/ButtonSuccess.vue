@@ -16,7 +16,7 @@ watch(
 </script>
 <template>
     <button
-        class="text-white bg-success hover:bg-success-hover focus:ring-4 focus:outline-none focus:ring-green-300 rounded font-semibold text-md px-4 py-2 text-center dark:bg-success-dark dark:hover:bg-success-hover dark:focus:ring-green-800"
+        class="text-white bg-success-600 hover:bg-success-500 focus:ring-4 focus:outline-none focus:ring-success-400 rounded font-semibold text-md px-4 py-2 text-center dark:bg-success-800 dark:hover:bg-success-700 dark:focus:ring-success-700"
         :disabled="statusButton"
     >
         <slot />

@@ -8,7 +8,7 @@
 
                 <a
                     href="https://manejoweb.com.ar/"
-                    class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-blue-400"
+                    class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-primary-400"
                     >ManejoWeb</a
                 >
             </li>

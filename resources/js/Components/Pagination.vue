@@ -1,16 +1,104 @@
+<script setup>
+import { ref, computed, onMounted, watch } from "vue";
+const props = defineProps({
+  total:{
+    type: Number,
+    required: true,
+  },
+  current:{
+    type: Number,
+    required: true,
+  },
+  onPageChange: {
+    type: Function,
+  },
+  extraClass: {
+    type: String,
+    default: "",
+  }
+});
+
+const totalPages = ref(props.total)
+const currentPage = ref(props.current)
+const ellipsis = "···"
+const pre = "Anterior"
+const next = "Siguiente"
+const showPages = ref(true)
+
+const pages = computed ( () => {
+  const c = currentPage.value;
+  const t = totalPages.value;
+  if (t <= 11) {
+    const pages = [];
+    for (let i = 1; i <= t; i++) {
+      pages.push(i);
+    }
+    return pages;
+  } else {
+    let pages = [];
+    if (c <= 5) {
+      pages = [1, 2, 3, 4, 5, ellipsis, t];
+    } else if (c >= t - 4) {
+      pages = [1, ellipsis, t - 4, t - 3, t - 2, t - 1, t,];
+    } else {
+      pages = [1, ellipsis, c - 1, c, c + 1, ellipsis, t,];
+    }
+    return pages;
+  }
+})
+const nextDisabled = computed ( () => {
+  return currentPage.value === totalPages.value;
+})
+const prevDisabled = computed ( () => {
+  return currentPage.value === 1;
+})
+
+const handlePageChange =  () => {
+  props.onPageChange(currentPage.value);
+}
+const handleClickActive = (page) => {
+  if (page === currentPage.value || page === ellipsis) return;
+  currentPage.value = page;
+  handlePageChange()
+}
+const handleClickControl = (n) => {
+  currentPage.value += n;
+  handlePageChange()
+}
+
+onMounted(() => {
+  if(window.innerWidth < 520 ){
+    showPages.value = false;
+  }
+})
+
+watch(
+  () => props.current,
+  () => {
+    currentPage.value = props.current
+  },
+)
+watch(
+  () => props.total,
+  () => {
+    totalPages.value = props.total
+  },
+)
+
+</script>
 <template>
-  <nav class="pages-container" :class="extraClass" id="pagination">
+  <nav :class="[extraClass,'pages-container']" id="pagination">
     <ul class="pages">
       <button :disabled="prevDisabled" type="button" class="page prev" @click="handleClickControl(-1)">{{ pre }}</button>
         <template v-if="showPages">
             <li
-            class="page"
-            v-for="(item, index) in pages"
-            :key="index"
-            :class="{ ellipsis: item === ellipsis, active: item === currentPage }"
-            @click="handleClickActive(item)"
+              class="page"
+              v-for="(item, index) in pages"
+              :key="index"
+              :class="{ ellipsis: item === ellipsis, active: item === currentPage }"
+              @click="handleClickActive(item)"
             >
-                <button type="button">{{ item }}</button>
+              <button type="button">{{ item }}</button>
             </li>
         </template>
       <button :disabled="nextDisabled" type="button" class="page next" @click="handleClickControl(+1)">{{ next }}</button>
@@ -18,99 +106,23 @@
   </nav>
 </template>
 
-<script>
-export default {
-  props: {
-    total:{
-      type: Number,
-      required: true,
-    },
-    current:{
-      type: Number,
-      required: true,
-    },
-    onPageChange: {
-      type: Function,
-    },
-    extraClass: {
-      type: String,
-      default: "",
-    }
-  },
-  data() {
-    return {
-      totalPages: this.total,
-      currentPage: this.current,
-      ellipsis: "···",
-      pre: "Anterior",
-      next: "Siguiente",
-      showPages: true,
-    };
-  },
-  computed: {
-
-    pages() {
-      const c = this.currentPage;
-      const t = this.totalPages;
-      if (t <= 11) {
-        const pages = [];
-        for (let i = 1; i <= t; i++) {
-          pages.push(i);
-        }
-        return pages;
-      } else {
-        let pages = [];
-        if (c <= 5) {
-          pages = [1, 2, 3, 4, 5, this.ellipsis, t];
-        } else if (c >= t - 4) {
-          pages = [1, this.ellipsis, t - 4, t - 3, t - 2, t - 1, t,];
-        } else {
-          pages = [1, this.ellipsis, c - 1, c, c + 1, this.ellipsis, t,];
-        }
-        return pages;
-      }
-    },
-    nextDisabled() {
-       return this.currentPage === this.totalPages;
-    },
-    prevDisabled() {
-       return this.currentPage === 1;
-    },
-
-  },
-  methods: {
-    handlePageChange () {
-       this.onPageChange(this.currentPage);
-    },
-    handleClickActive(page) {
-      if (page === this.currentPage || page === this.ellipsis) return;
-      this.currentPage = page;
-      this.handlePageChange()
-    },
-    handleClickControl(n) {
-      this.currentPage += n;
-      this.handlePageChange()
-    },
-  },
-  mounted() {
-    if(window.innerWidth < 520 ){
-       this.showPages = false;
-    }
-  },
-
-};
-</script>
-
 <style scoped>
+
 .pages-container {
-  --theme-color: #2d88ff;
-  --background-color: #fff;
-  --border-color: #dee2e6;
+    --bg-selected: #2d88ff;
+    --bg-hover: #299BFF;
+    --background-color: white;
+    --border-color: #dee2e6;
+    --text-color: #2d88ff;
+    --text-selected: white;
 }
 .dark .pages-container {
-  --theme-color: #235487;
-  --background-color: #121212;
+  --bg-hover: #0067C2;
+  --bg-selected: #004480;
+  --background-color: #1e1e1e;
   --border-color: #444546;
+  --text-color: white;
+  --text-selected: #CED1D4;
 }
 
 .pages-container .pages {
@@ -132,7 +144,7 @@ export default {
   min-width: 38px;
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
-  color: var(--theme-color);
+  color: var(--text-color);
   display: inline-block;
   line-height: 38px;
   text-align: center;
@@ -147,18 +159,19 @@ export default {
   padding: 0 16px;
 }
 .pages-container .pages .page:hover {
-  background-color: var(--theme-color);
-  border-color: var(--theme-color);
-  color: var(--background-color);
-  opacity: 0.5;
+  background-color: var(--bg-hover);
+  border-color: var(--bg-hover);
+  color: var(--text-selected);
 }
 .pages-container .pages .active {
-  background-color: var(--theme-color);
-  border-color: var(--theme-color);
-  color: var(--background-color);
+  background-color: var(--bg-selected);
+  border-color: var(--bg-selected);
+  color: var(--text-selected);
 }
 .pages-container .pages .active:hover {
-  opacity: 1;
+  background-color: var(--bg-selected);
+  border-color: var(--bg-selected);
+  color: var(--text-selected);
 }
 .pages-container .pages .ellipsis {
   background-color: var(--background-color);

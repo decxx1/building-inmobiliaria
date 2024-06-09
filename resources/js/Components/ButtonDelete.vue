@@ -34,14 +34,14 @@ defineProps({
                 <button
                     @click="handleConfirmDelete"
                     type="button"
-                    class="text-white bg-danger hover:bg-danger-hover focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-danger-dark dark:hover:bg-danger-hover font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                    class="text-white bg-danger-600 hover:bg-danger-500 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-danger-800 dark:hover:bg-danger-700 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
                 >
                     Eliminar
                 </button>
                 <button
                     @click="handleCloseModalDelete"
                     type="button"
-                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-secondary rounded-lg border border-gray-200 hover:bg-secondary-hover hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-secondary-dark dark:text-white dark:border-secondary-dark dark:hover:text-white dark:hover:bg-secondary-hover"
+                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-secondary-600 rounded-lg border border-gray-200 hover:bg-secondary-500 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-secondary-800 dark:text-white dark:border-secondary-800 dark:hover:text-white dark:hover:bg-secondary-700"
                 >Cancelar
                 </button>
             </div>

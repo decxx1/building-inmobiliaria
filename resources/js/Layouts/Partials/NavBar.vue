@@ -57,7 +57,7 @@ const handleMouseOut = () => {
     </nav>
 
     <aside @mouseover="handleMouseOver" @mouseout="handleMouseOut" id="logo-sidebar" :class="[store.sidebarCompact ? 'w-20' : 'w-64', 'fixed top-0 left-0 z-50 h-screen elevation transition-all ease-in duration-300 border-r border-gray-200 sm:translate-x-0 -translate-x-full dark:border-background-dark']" aria-label="Sidebar">
-        <div class="bg-primary dark:bg-primary-dark px-3 py-3 lg:px-5 lg:pl-3">
+        <div class="bg-primary-600 dark:bg-primary-800 px-3 py-3 lg:px-5 lg:pl-3">
             <a class="flex ps-3">
                 <ApplicationLogo
                     :compact="store.sidebarCompact"
