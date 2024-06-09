@@ -10,8 +10,8 @@ class AvatarController extends Controller
 {
     public function get(int $user_id){
         $userAvatar = Avatar::where('user_id', $user_id)->first();
-
-        $avatar = !$userAvatar  ? 'avatar.webp' : $userAvatar->thumbnail;
+        $APP_URL = env('APP_URL');
+        $avatar = !$userAvatar  ? $APP_URL.'avatar.webp' : $APP_URL.$userAvatar->thumbnail;
 
         return $avatar;
     }

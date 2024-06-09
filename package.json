@@ -20,9 +20,11 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@fontsource/montserrat": "^5.0.17",
+        "@fontsource/poppins": "^5.0.12",
+        "@fontsource/source-sans-pro": "^5.0.8",
         "@iconify/json": "^2.2.185",
         "flowbite": "^2.3.0",
-        "flowbite-vue": "^0.1.2",
         "vue-sonner": "^1.0.3"
     }
 }

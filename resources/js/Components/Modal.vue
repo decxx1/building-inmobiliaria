@@ -1,98 +1,132 @@
 <script setup>
-import { computed, onMounted, onUnmounted, watch } from 'vue';
+import { Modal } from 'flowbite';
+import { onMounted, ref, watch } from 'vue';
 
-const props = defineProps({
-    show: {
-        type: Boolean,
-        default: false,
-    },
-    maxWidth: {
+const modal = ref(false);
+
+const props = defineProps ({
+    size:{
         type: String,
-        default: '2xl',
+        default: '2xl'
     },
-    closeable: {
+    show:{
         type: Boolean,
-        default: true,
+        default: false
     },
-});
-
-const emit = defineEmits(['close']);
-
+    persistent:{
+        type: Boolean,
+        default: false
+    }
+})
 watch(
     () => props.show,
     () => {
-        if (props.show) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = null;
+        if(props.show){
+            modal.value.show()
+        }else{
+            modal.value.hide()
         }
     }
 );
 
-const close = () => {
-    if (props.closeable) {
-        emit('close');
-    }
-};
+//cerrar modal desde a dentro del componente
+const emit = defineEmits(['close']);
 
-const closeOnEscape = (e) => {
-    if (e.key === 'Escape' && props.show) {
-        close();
-    }
-};
+const closeModal = () => {
+    emit('close');
+}
 
-onMounted(() => document.addEventListener('keydown', closeOnEscape));
+onMounted(() => {
+    // set the modal menu element
+    const $targetEl = document.getElementById('modalId');
+    let backdropOption = props.persistent ? 'static' : 'dynamic';
+    // options with default values
+    const options = {
+        placement: 'top-center',
+        backdrop: backdropOption,
+        backdropClasses:
+            'bg-[#0000008a] fixed inset-0 z-[60]',
+        closable: true,
+        onHide: () => {
+            emit('close');
+        },
+    };
 
-onUnmounted(() => {
-    document.removeEventListener('keydown', closeOnEscape);
-    document.body.style.overflow = null;
-});
+    // instance options object
+    const instanceOptions = {
+    id: 'modalId',
+    override: true
+    };
 
-const maxWidthClass = computed(() => {
+    modal.value = new Modal($targetEl, options, instanceOptions);
+
+})
+
+const maxWidthClass = (maxWidth) => {
     return {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
-    }[props.maxWidth];
-});
+        md: 'max-w-md',
+        lg: 'max-w-lg',
+        xl: 'max-w-xl',
+        '2xl': 'max-w-2xl',
+        '3xl': 'max-w-3xl',
+    }[maxWidth];
+};
 </script>
-
 <template>
-    <Teleport to="body">
-        <Transition leave-active-class="duration-200">
-            <div v-show="show" class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50" scroll-region>
-                <Transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0"
-                    enter-to-class="opacity-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100"
-                    leave-to-class="opacity-0"
+    <div
+        id="modalId"
+        tabindex="-1"
+        aria-hidden="true"
+        class="fixed left-0 right-0 top-0 z-[70] hidden h-[calc(100%-1rem)] max-h-full w-full p-4 md:inset-0 overflow-y-auto"
+    >
+    <div :class="[maxWidthClass(props.size), 'relative max-h-full p-4 w-full']">
+        <!-- Modal content -->
+        <div class="relative rounded bg-white shadow-lg dark:bg-background-semidark" >
+            <!-- Modal header -->
+            <div
+                class="flex items-start justify-between rounded-t border-b p-5 dark:border-gray-600"
+            >
+                <h3
+                    v-if="$slots.header"
+                    class="text-xl font-semibold text-gray-900 dark:text-white lg:text-2xl"
                 >
-                    <div v-show="show" class="fixed inset-0 transform transition-all" @click="close">
-                        <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75" />
-                    </div>
-                </Transition>
-
-                <Transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    <slot name="header" />
+                </h3>
+                <button
+                    @click="closeModal"
+                    type="button"
+                    class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                    <div
-                        v-show="show"
-                        class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
-                        :class="maxWidthClass"
+                    <svg
+                        class="h-3 w-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
                     >
-                        <slot v-if="show" />
-                    </div>
-                </Transition>
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
             </div>
-        </Transition>
-    </Teleport>
+            <!-- Modal body -->
+            <div class="space-y-6 p-6">
+                <slot name="body" />
+            </div>
+            <!-- Modal footer -->
+            <div
+                class="space-x-2 rtl:space-x-reverse rounded-b border-t border-gray-200 p-6 dark:border-gray-600"
+            >
+                <slot name="footer" />
+            </div>
+        </div>
+    </div>
+</div>
+
 </template>

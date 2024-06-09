@@ -9,15 +9,22 @@ import { toast } from 'vue-sonner'
 import { Head, useForm } from '@inertiajs/vue3';
 import ButtonIcon from '@/Components/ButtonIcon.vue';
 import Card from '@/Components/Card.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { ref, onMounted } from 'vue';
 import { Drawer, Modal } from 'flowbite';
 
-defineProps({
-    users: {
+const props = defineProps({
+    usersPagination: {
         type: Object,
-    },
+    }
 });
-
+//console.log(props.usersPagination)
+//pagination
+const currentPage = ref(props.usersPagination.current_page);
+const users = ref(props.usersPagination.data);
+const perPage = ref(props.usersPagination.per_page);
+const totalUsers = ref(props.usersPagination.total);
+//crud
 const userToEdit = ref({});
 const drawerEdit = ref(null);
 const drawerCreate = ref(null);
@@ -28,6 +35,26 @@ const drawerCreateId = 'user-create';
 const drawerPasswordId = 'user-password-change';
 const modalDeleteId = 'user-delete';
 
+const totalPages = (total, per_page) => {
+    return Math.ceil(total / per_page);
+}
+
+const handlePageChange = (page) => {
+    currentPage.value = page;
+    updateUsers();
+}
+
+const updateUsers = () => {
+    form.get(route('users', { page: currentPage.value }), {
+        onSuccess: (resp) => {
+            //console.log(resp)
+            users.value = resp.data;
+        },
+        onError: (error) => {
+            console.error(error)
+        },
+    });
+}
 const handleDrawerEditToggle = () => {
     drawerEdit.value.toggle();
 }
@@ -71,6 +98,7 @@ const handleEditAvatar = (user) => {
         onSuccess: () => {
             toast.success('¡Imagen actualizada!')
             form.reset();
+            updateUsers();
         },
         onError: (error) => {
             console.error(error)
@@ -86,7 +114,6 @@ onMounted(() => {
     const targetDrawerCreate = document.getElementById(drawerCreateId);
     const targetDrawerEdit = document.getElementById(drawerEditId);
     const targetDrawerPassword = document.getElementById(drawerPasswordId);
-    // set the modal menu element
     const targetModalDelete = document.getElementById(modalDeleteId);
 
     // options with default values
@@ -104,12 +131,10 @@ onMounted(() => {
         override: true
     };
 
-    // options with default values
     const options = {
         placement: 'right',
         backdrop: 'true',
-        backdropClasses:
-            'bg-gray-900/50 dark:bg-backdrop-dark fixed inset-0 z-30',
+        backdropClasses: 'bg-gray-900/50 dark:bg-backdrop-dark fixed inset-0 z-30',
         bodyScrolling: true,
 
     };
@@ -150,16 +175,24 @@ onMounted(() => {
                 :handleFileChange="handleFileChange"
             />
         </div>
+        <Pagination
+            :total="totalPages(totalUsers, perPage)"
+            :current="currentPage"
+            :onPageChange="handlePageChange"
+            :extraClass="'mt-8'"
+        />
 
         <CreateUser
             :drawerId="drawerCreateId"
             :handleDrawerCreateToggle="handleDrawerCreateToggle"
+            :updateUsers="updateUsers"
         />
 
         <EditUser
             :user="userToEdit"
             :drawerId="drawerEditId"
             :handleDrawerEditToggle="handleDrawerEditToggle"
+            :updateUsers="updateUsers"
         />
 
         <ChangePassword
@@ -172,6 +205,7 @@ onMounted(() => {
             :user="userToEdit"
             :modalId="modalDeleteId"
             :handleCloseModalDelete="handleCloseModalDelete"
+            :updateUsers="updateUsers"
         />
 
     </AuthenticatedLayout>

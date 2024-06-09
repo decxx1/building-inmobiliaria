@@ -16,7 +16,7 @@ const props = defineProps ({
     drawerId: {
         type: String,
         required: true
-    }
+    },
 })
 
 const form = useForm({

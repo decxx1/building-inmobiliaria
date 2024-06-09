@@ -8,11 +8,14 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
 use App\Models\Avatar;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 
@@ -20,21 +23,36 @@ class UserController extends Controller
 {
     public function index():Response
     {
-        $users = User::all();
-        $AvatarController = new AvatarController();
-
-        foreach ($users as $user) {
+        //Paginar usuarios
+        $users = User::where('company_id', Auth::user()->company_id)->paginate(10);
+        //agregar avatar a los usuarios
+        $formattedUsers = collect($users->items())->map(function ($user) {
+            $AvatarController = new AvatarController();
             $user->avatar = $AvatarController->get($user->id);
-        }
+            return $user;
+        });
+        //crear paginador
+        $paginator = new LengthAwarePaginator(
+            $formattedUsers,
+            $users->total(),
+            $users->perPage(),
+            $users->currentPage(),
+            [
+                'path' => Paginator::resolveCurrentPath(),
+                'query' => request()->query(),
+            ]
+        );
 
         return Inertia::render('Users/Index', [
-            'users' => $users,
+            'usersPagination' => $paginator,
         ]);
     }
+
 
     public function store(UserRequest $request): RedirectResponse
     {
         User::create([
+            'company_id' => Auth::user()->company_id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

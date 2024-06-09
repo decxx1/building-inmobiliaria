@@ -11,6 +11,10 @@ const props = defineProps ({
     drawerId: {
         type: String,
         required: true
+    },
+    updateUsers: {
+        type: Function,
+        required: true
     }
 })
 const form = useForm({
@@ -26,6 +30,7 @@ const handleCreateUser = () => {
             toast.success('¡Usuario Creado!')
             form.reset()
             props.handleDrawerCreateToggle()
+            props.updateUsers()
         },
         onError: (error) => {
             //console.error(error)

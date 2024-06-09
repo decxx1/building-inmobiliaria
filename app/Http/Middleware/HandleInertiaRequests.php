@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 use App\Models\Avatar;
+use App\Http\Controllers\AvatarController;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -33,13 +34,12 @@ class HandleInertiaRequests extends Middleware
     {
         //encontrar el avatar del usuario
         $user = $request->user();
-
-        $avatar = 'avatar.webp';
+        $APP_URL = env('APP_URL');
+        $avatar = $APP_URL.'avatar.webp';
         if($user){
-            $userAvatar = Avatar::where('user_id', $user->id)->first();
-            $avatar = $userAvatar  ? $userAvatar->thumbnail : 'avatar.webp';
+            $AvatarController = new AvatarController();
+            $avatar = $AvatarController->get($user->id);
         }
-
 
         return [
             ...parent::share($request),

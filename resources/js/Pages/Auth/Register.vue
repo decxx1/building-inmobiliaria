@@ -1,10 +1,15 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { toast } from 'vue-sonner'
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import InputStyle from '@/Components/Welcome/InputStyle.vue';
+
+const showPassword = ref(false);
+
+const togglePassword = () => {
+    showPassword.value = !showPassword.value;
+};
 
 const form = useForm({
     name: '',
@@ -15,88 +20,91 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('register'), {
+        onError: (error) => {
+            //console.error(error)
+            const { name, email, password } = form.errors;
+            if (name) {
+                toast.warning(name)
+            }else if (email) {
+                toast.warning(email)
+            }else if (password) {
+                toast.warning(password)
+            }else if (error.message){
+                toast.warning(error.message)
+            }
+        },
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Register" />
-        <h5 class="text-2xl font-medium text-gray-900 dark:text-white text-center mb-4">Registrarse</h5>
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+    <form class="sign-up-form" @submit.prevent="submit">
+        <h2 class="text-4xl font-bold mb-3 text-gray-600 dark:text-gray-300">Registrarse</h2>
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+        <InputStyle
+            icon="icon-[fa--id-card]"
+            id="name"
+            type="text"
+            placeholder="Nombre"
+            v-model="form.name"
+            required
+            autofocus
+            autocomplete="name"
+        />
+        <InputError class="mt-2" :message="form.errors.name" />
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+        <InputStyle
+            icon="icon-[fa--envelope]"
+            id="email"
+            type="email"
+            placeholder="E-mail"
+            v-model="form.email"
+            required
+            autocomplete="username"
+        />
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+        <InputError class="mt-2" :message="form.errors.email" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+        <InputStyle
+            icon="icon-[fa--lock]"
+            id="password"
+            :type="showPassword ? 'text' : 'password'"
+            v-model="form.password"
+            placeholder="Contraseña"
+            required
+            autocomplete="new-password"
+        >
+            <i :class="[showPassword ? 'icon-[fa--eye-slash]' : 'icon-[fa--eye]', 'cursor-pointer justify-self-center self-center h-[18px] w-[18px] bg-gray-400 dark:bg-gray-200']" @click="togglePassword"></i>
+        </InputStyle>
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+        <InputError class="mt-2" :message="form.errors.password" />
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+        <InputStyle
+            icon="icon-[fa--lock]"
+            id="password_confirmation"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="Repetir contraseña"
+            v-model="form.password_confirmation"
+            required
+            autocomplete="new-password"
+        >
+            <i :class="[showPassword ? 'icon-[fa--eye-slash]' : 'icon-[fa--eye]', 'cursor-pointer justify-self-center self-center h-[18px] w-[18px] bg-gray-400 dark:bg-gray-200']" @click="togglePassword"></i>
+        </InputStyle>
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+        <InputError class="mt-2" :message="form.errors.password_confirmation" />
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+        <!-- <label class="check">
+            <input type="checkbox" checked="checked">
+            <span class="checkmark">I accept the <a href="terms.html">terms and services</a></span>
+        </label> -->
+        <input
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+            type="submit"
+            value="Crear cuenta"
+            class="w-40 h-12 text-sm md:text-base bg-primary dark:bg-primary-dark hover:bg-primary-hover rounded-3xl text-white font-semibold cursor-pointer my-2.5 uppercase"
+        />
 
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class=" mt-4 mb-4">
-                <PrimaryButton class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Registrar
-                </PrimaryButton>
-            </div>
-            <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >
-                    Ya tienes una cuenta?
-                </Link>
-        </form>
-    </GuestLayout>
+    </form>
 </template>

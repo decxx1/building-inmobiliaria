@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+
 const { addDynamicIconSelectors } = require('@iconify/tailwind');
 
 /** @type {import('tailwindcss').Config} */
@@ -15,8 +16,8 @@ export default {
 
     theme: {
         colors:{
-            'primary': '#007bff',
-            'primary-hover': '#1a56db',
+            'primary': '#0089ff',
+            'primary-hover': '#4d84e2',
             'primary-dark': '#235487',
             'secondary': '#6c757d',
             'secondary-dark': '#2c3e50',
@@ -31,16 +32,19 @@ export default {
             'danger-dark': '#e74d3d',
             'danger-hover': '#ed7d7d',
             'success': '#28a745',
-            'success-dark': '#0cbf91',
-            'success-hover': '#4dcfbf',
+            'success-dark': '#00bc8c',
+            'success-hover': '#218838',
             'background-light': '#f4f6f9',
             'background-dark': '#121212',
+            'background-semidark': '#191919',
             'surface-dark': '#1e1e1e',
             'backdrop-dark': '#121212d1',
         },
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                SourceSansPro: ['Source Sans Pro', 'sans-serif'],
+                Montserrat: ['Montserrat', 'sans-serif'],
             },
         },
     },

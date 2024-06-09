@@ -3,7 +3,7 @@
   <button
 					type="button"
 					data-dropdown-toggle="notification-dropdown"
-					class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-background-dark"
+					class="p-2 text-gray-400 rounded-lg hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-background-dark"
 				>
 					<span class="sr-only">View notifications</span>
 					<!-- Bell icon -->

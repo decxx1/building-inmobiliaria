@@ -16,6 +16,10 @@ const props = defineProps ({
     drawerId: {
         type: String,
         required: true
+    },
+    updateUsers: {
+        type: Function,
+        required: true
     }
 })
 
@@ -25,11 +29,14 @@ const form = useForm({
     email: props.user.email,
 });
 
-watch(() => props.user, () => {
-    form.id = props.user.id;
-    form.name = props.user.name;
-    form.email = props.user.email;
-});
+watch(
+    () => props.user,
+    () => {
+        form.id = props.user.id;
+        form.name = props.user.name;
+        form.email = props.user.email;
+    }
+);
 
 const handleEditUser = () => {
     form.put(route('users.update', { id: form.id }), {
@@ -38,6 +45,7 @@ const handleEditUser = () => {
             toast.success('¡Usuario actualizado!')
             form.reset();
             props.handleDrawerEditToggle();
+            props.updateUsers();
         },
         onError: (error) => {
             //console.error(error)

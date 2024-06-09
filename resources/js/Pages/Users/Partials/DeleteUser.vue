@@ -15,6 +15,10 @@ const props = defineProps ({
     modalId: {
         type: String,
         required: true
+    },
+    updateUsers: {
+        type: Function,
+        required: true
     }
 })
 const form = useForm({
@@ -32,6 +36,7 @@ const handleDeleteUser = () => {
             toast.success('¡Usuario eliminado!')
             form.reset();
             props.handleCloseModalDelete();
+            props.updateUsers();
         },
         onError: (error) => {
             console.error(error)

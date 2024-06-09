@@ -1,7 +1,10 @@
+<script setup>
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+</script>
 <template>
   <div class="flex items-center ms-3">
     <div>
-        <button type="button" class="flex items-center gap-4" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+        <button type="button" class="flex items-center gap-2" aria-expanded="false" data-dropdown-toggle="dropdown-user">
             <img class="w-10 h-10 rounded-full elevation-2" :src="$page.props.auth.avatar" alt="user photo">
             <div class="text-gray-800 dark:text-white">
                 <div>{{ $page.props.auth.user.name }}</div>
@@ -30,11 +33,6 @@
     </div>
 </div>
 </template>
-
-<script setup>
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-</script>
-
 <style>
 
 </style>
