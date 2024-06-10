@@ -39,6 +39,7 @@ Route::prefix('/app')->group(function () {
         Route::get('/products',[UserController::class, 'index'])->name('products');
         Route::get('/providers',[ProviderController::class, 'index'])->name('providers');
         Route::post('/providers',[ProviderController::class, 'store'])->name('providers.store');
+        Route::put('/providers/{id}',[ProviderController::class, 'update'])->name('providers.update');
 
         Route::get('/users',[UserController::class, 'index'])->name('users');
         Route::post('/users',[UserController::class, 'store'])->name('users.store');

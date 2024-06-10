@@ -6,10 +6,16 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Card from '@/Components/Card.vue';
 import ButtonIcon from '@/Components/ButtonIcon.vue';
 import Table from '@/Components/Table.vue';
+import TableHeader from '@/Components/TableHeader.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { toast } from 'vue-sonner'
 import Modal from '@/Components/Modal.vue';
-import { countries } from '@/Hooks/countries.json';
+import { countries } from '@/Data/countries.json';
+import {
+    defaultCountry,
+    defaultTin,
+} from '@/Services/env.js';
 
 const props = defineProps({
     providersPagination: {
@@ -21,6 +27,34 @@ const currentPage = ref(props.providersPagination.current_page);
 const providers = ref(props.providersPagination.data);
 const perPage = ref(props.providersPagination.per_page);
 const totalProviders = ref(props.providersPagination.total);
+const create = ref(true);
+
+//showing items
+const startShowing = computed(() => {
+    return (currentPage.value - 1) * perPage.value + 1;
+})
+const endShowing = computed(() => {
+    return Math.min(currentPage.value * perPage.value, totalProviders.value);
+})
+//search bar
+const search = ref('');
+watch(
+  () => search.value,
+  () => {
+    updateProvidersList();
+  },
+)
+//actualizar variables cuando cambie las props
+watch(
+  () => props.providersPagination,
+  () => {
+    currentPage.value = props.providersPagination.current_page;
+    providers.value = props.providersPagination.data;
+    perPage.value = props.providersPagination.per_page;
+    totalProviders.value = props.providersPagination.total;
+  },
+)
+
 //console.log(props.providersPagination)
 
 
@@ -30,7 +64,7 @@ const totalPages = (total, per_page) => {
 
 const handlePageChange = (page) => {
     currentPage.value = page;
-    updateProviders();
+    updateProvidersList();
 }
 
 const form = useForm({
@@ -48,11 +82,12 @@ const form = useForm({
     color: '',
 });
 
-const updateProviders = () => {
-    form.get(route('providers', { page: currentPage.value }), {
+const updateProvidersList = () => {
+    form.get(route('providers', { page: currentPage.value, search: search.value }), {
+        preserveState: true,
+        replace: true,
         onSuccess: (resp) => {
             //console.log(resp)
-            providers.value = resp.data;
         },
         onError: (error) => {
             console.error(error)
@@ -61,7 +96,7 @@ const updateProviders = () => {
 }
 
 
-console.log(form);
+//console.log(form);
 
 const handleCreateProvider = () => {
     form.post(route('providers.store'), {
@@ -70,7 +105,33 @@ const handleCreateProvider = () => {
             toast.success('¡Proveedor Creado!')
             form.reset()
             isShowModal.value = false
-            props.updateProviders()
+            updateProvidersList()
+        },
+        onError: (error) => {
+            //console.error(error)
+            const formErrors = form.errors;
+
+            for (let field in formErrors) {
+                if (formErrors.hasOwnProperty(field)) {
+                    toast.warning(formErrors[field]);
+                    break; // Detener el bucle después de mostrar el primer mensaje de error
+                }
+            }
+
+            if (error.message) {
+                toast.warning(error.message);
+            }
+        },
+    });
+}
+const handleUpdateProvider = () => {
+    form.put(route('providers.update', { id: form.id }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success('¡Proveedor Actualizado!')
+            form.reset()
+            isShowModal.value = false
+            updateProvidersList()
         },
         onError: (error) => {
             //console.error(error)
@@ -96,13 +157,16 @@ const modalTitle = ref('')
 
 const editProvider = (provider) => {
     modalTitle.value = 'Editar Proveedor'
-    Object.assign(form, provider);
+    Object.assign(form, provider)
     showModal()
+    create.value = false
 }
 const createProvider = () => {
     modalTitle.value = 'Crear Proveedor'
     form.reset()
+    form.country = defaultCountry;
     showModal()
+    create.value = true
 }
 const showModal = () => {
   isShowModal.value = true
@@ -110,7 +174,7 @@ const showModal = () => {
 const closeModal = () => {
   isShowModal.value = false
 }
-const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
+const headers =['Nombre', defaultTin, 'Dirección', 'Teléfono', 'Email']
 </script>
 
 <template>
@@ -121,62 +185,103 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
             <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">Proveedores</h2>
         </template>
 
-
-        <Table
-            :headers="headers"
-        >
-            <template #topHeader>
-                <ButtonIcon
-                    name="Crear proveedor"
-                    icon="icon-[fa-solid--plus]"
-                    @click="createProvider"
-                >
-                </ButtonIcon>
-            </template>
-            <template v-if="providers.length">
-                <tr
-                    v-for="item in providers"
-                    :key="item.id"
-                    class="odd:bg-gray-50 odd:dark:bg-[#222222] even:bg-gray-100 even:dark:bg-background-semidark border dark:border-[#333]"
-                >
-                    <td class="py-3 flex items-center justify-center">
-                        <button
-                            :id="'dropdown-'+item.id"
-                            :data-dropdown-toggle="'edit-'+item.id"
-                            class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 dark:text-gray-200 hover:text-gray-800 rounded-lg focus:outline-none dark:hover:text-white"
-                            type="button"
-                        >
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                            </svg>
-                        </button>
-                        <div :id="'edit-'+item.id" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow border border-gray-100 dark:border-gray-700 dark:bg-background-dark dark:divide-gray-600">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-white" :aria-labelledby="'dropdown-'+item.id">
-                                <li>
-                                    <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white">Show</a>
-                                </li>
-                                <li>
-                                    <button @click="editProvider(item)" class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white">Editar</button>
-                                </li>
-                            </ul>
-                            <div class="py-1">
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white dark:hover:text-white">Delete</a>
+        <section class="bg-white dark:bg-surface-dark relative shadow-md sm:rounded-lg overflow-hidden">
+            <TableHeader>
+                <template #topHeader>
+                    <ButtonIcon
+                        name="Crear proveedor"
+                        icon="icon-[fa-solid--plus]"
+                        @click="createProvider"
+                    >
+                    </ButtonIcon>
+                </template>
+                <template #searchBar>
+                    <form @submit.prevent class="flex items-center">
+                        <label for="simple-search" class="sr-only">Buscar</label>
+                        <div class="relative w-full">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <i class="icon-[mdi--search] w-5 h-5 text-gray-500 dark:text-white"></i>
                             </div>
+                            <input
+                                v-model="search"
+                                type="text"
+                                id="simple-search"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Buscar"
+                            />
                         </div>
-                    </td>
-                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100">{{ item.name }}</td>
-                    <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.cuit }}</td>
-                    <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.address }}</td>
-                    <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.phone }}</td>
-                    <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.email }}</td>
-                </tr>
-            </template>
-            <template v-else>
-                <tr class="border-b dark:border-gray-700">
-                    <td class="whitespace-nowrap">No hay proveedores cargados</td>
-                </tr>
-            </template>
-        </Table>
+                    </form>
+                </template>
+            </TableHeader>
+            <Table
+                :headers="headers"
+            >
+                <template v-if="providers && providers.length">
+                    <tr
+                        v-for="item in providers"
+                        :key="item.id"
+                        class="odd:bg-gray-50 odd:dark:bg-[#222222] even:bg-gray-100 even:dark:bg-background-semidark border dark:border-[#333]"
+                    >
+                        <td class="py-3 flex items-center justify-center">
+                            <button
+                                :id="'dropdown-'+item.id"
+                                :data-dropdown-toggle="'edit-'+item.id"
+                                class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 dark:text-gray-200 hover:text-gray-800 rounded-lg focus:outline-none dark:hover:text-white"
+                                type="button"
+                            >
+                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </button>
+                            <div :id="'edit-'+item.id" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow border border-gray-100 dark:border-gray-700 dark:bg-background-dark dark:divide-gray-600">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-white" :aria-labelledby="'dropdown-'+item.id">
+                                    <li>
+                                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white">Show</a>
+                                    </li>
+                                    <li>
+                                        <button @click="editProvider(item)" class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white">Editar</button>
+                                    </li>
+                                </ul>
+                                <div class="py-1">
+                                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white dark:hover:text-white">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100">{{ item.name }}</td>
+                        <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.cuit }}</td>
+                        <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.address }}</td>
+                        <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.phone }}</td>
+                        <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ item.email }}</td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="whitespace-nowrap">No hay proveedores cargados</td>
+                    </tr>
+                </template>
+                <template #showing>
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                        Mostrando
+                        <span class="font-semibold text-gray-900 dark:text-white">
+                            {{ startShowing }} - {{ endShowing }}
+                        </span>
+                        de
+                        <span class="font-semibold text-gray-900 dark:text-white">
+                            {{totalProviders}}
+                        </span>
+                        datos
+                    </span>
+                </template>
+                <template #pagination>
+                    <Pagination
+                        :total="totalPages(totalProviders, perPage)"
+                        :current="currentPage"
+                        :onPageChange="handlePageChange"
+                        :extraClass="'mt-2'"
+                    />
+                </template>
+            </Table>
+        </section>
         <!-- Crear Editar Proveedor -->
         <Modal :show="isShowModal" @close="closeModal" size="3xl" persistent >
             <template #header>
@@ -199,7 +304,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     v-model="form.name"
                                     placeholder="Nombre"
                                     required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                             <div class="mb-3">
@@ -209,7 +314,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="color"
                                     v-model="form.color"
                                     placeholder="Color"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                         </Card>
@@ -218,13 +323,13 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                 <h3 class="font-semibold text-md text-white">Información fiscal</h3>
                             </template>
                             <div class="mb-3">
-                                <label for="cuit" class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">CUIT</label>
+                                <label for="cuit" class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">{{ defaultTin }}</label>
                                 <input
                                     type="text"
                                     name="cuit"
                                     v-model="form.cuit"
-                                    placeholder="CUIT"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    :placeholder="defaultTin"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                         </Card>
@@ -241,7 +346,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="phone"
                                     v-model="form.phone"
                                     placeholder="Teléfono"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                             <div class="mb-3">
@@ -251,7 +356,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="email"
                                     v-model="form.email"
                                     placeholder="E-mail"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                             <div class="mb-3">
@@ -261,7 +366,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="fax"
                                     v-model="form.fax"
                                     placeholder="Fax"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                             <div class="mb-3">
@@ -271,7 +376,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="web_site"
                                     v-model="form.web_site"
                                     placeholder="Sitio web"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                         </Card>
@@ -281,7 +386,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                             </template>
                             <div class="mb-3">
                                 <label for="countries" class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">País</label>
-                                <select v-model="form.country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <select v-model="form.country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option v-for="country in countries" :key="country" :value="country" >{{ country }}</option>
                                 </select>
                             </div>
@@ -292,7 +397,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="province"
                                     v-model="form.province"
                                     placeholder="Provincia"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                             <div class="mb-3">
@@ -302,7 +407,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="address"
                                     v-model="form.address"
                                     placeholder="Address"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                             <div class="mb-3">
@@ -312,7 +417,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                                     name="postal_code"
                                     v-model="form.postal_code"
                                     placeholder="Código postal"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 />
                             </div>
                         </Card>
@@ -323,7 +428,7 @@ const headers =['Nombre', 'CUIT', 'Dirección', 'Teléfono', 'Email']
                 <div class="flex justify-between">
                     <SecondaryButton @click="closeModal"> Cancelar </SecondaryButton>
 
-                    <SuccessButton @click="handleCreateProvider" :disabled="form.processing">
+                    <SuccessButton @click="create ? handleCreateProvider() : handleUpdateProvider()" :disabled="form.processing">
                         {{ modalTitle }}
                     </SuccessButton>
                 </div>
