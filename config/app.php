@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'StockWeb'),
+    'name' => env('APP_NAME', 'Building Inmobiliaria'),
 
     /*
     |--------------------------------------------------------------------------

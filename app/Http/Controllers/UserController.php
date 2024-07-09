@@ -24,7 +24,7 @@ class UserController extends Controller
     public function index():Response
     {
         //Paginar usuarios
-        $users = User::where('company_id', Auth::user()->company_id)->paginate(10);
+        $users = User::paginate(10);
         //agregar avatar a los usuarios
         $formattedUsers = collect($users->items())->map(function ($user) {
             $AvatarController = new AvatarController();
@@ -52,7 +52,6 @@ class UserController extends Controller
     public function store(UserRequest $request): RedirectResponse
     {
         User::create([
-            'company_id' => Auth::user()->company_id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

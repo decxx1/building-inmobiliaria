@@ -16,6 +16,14 @@ const props = defineProps ({
     persistent:{
         type: Boolean,
         default: false
+    },
+    keyId: {
+        type: String,
+        required: true
+    },
+    onSubmit: {
+        type: Function,
+        required: false
     }
 })
 watch(
@@ -28,7 +36,7 @@ watch(
         }
     }
 );
-
+const modalID = 'modalIDTarget'+props.keyId;
 //cerrar modal desde a dentro del componente
 const emit = defineEmits(['close']);
 
@@ -37,8 +45,8 @@ const closeModal = () => {
 }
 
 onMounted(() => {
-    // set the modal menu element
-    const $targetEl = document.getElementById('modalId');
+    // obtener el valor del modal por ID
+    const $targetEl = document.getElementById(modalID);
     let backdropOption = props.persistent ? 'static' : 'dynamic';
     // options with default values
     const options = {
@@ -54,12 +62,11 @@ onMounted(() => {
 
     // instance options object
     const instanceOptions = {
-    id: 'modalId',
+    id: modalID,
     override: true
     };
 
     modal.value = new Modal($targetEl, options, instanceOptions);
-
 })
 
 const maxWidthClass = (maxWidth) => {
@@ -74,10 +81,10 @@ const maxWidthClass = (maxWidth) => {
 </script>
 <template>
     <div
-        id="modalId"
+        :id="modalID"
         tabindex="-1"
         aria-hidden="true"
-        class="fixed left-0 right-0 top-0 z-[70] hidden h-[calc(100%-1rem)] max-h-full w-full p-4 md:inset-0 overflow-y-auto"
+        class="fixed left-0 right-0 top-0 z-[70] hidden h-[calc(100%-1rem)] max-h-full w-full p-4 md:inset-0"
     >
     <div :class="[maxWidthClass(props.size), 'relative max-h-full p-4 w-full']">
         <!-- Modal content -->
@@ -115,16 +122,18 @@ const maxWidthClass = (maxWidth) => {
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <!-- Modal body -->
-            <div class="space-y-6 p-6">
-                <slot name="body" />
-            </div>
-            <!-- Modal footer -->
-            <div
-                class="space-x-2 rtl:space-x-reverse rounded-b border-t border-gray-200 p-6 dark:border-gray-600"
-            >
-                <slot name="footer" />
-            </div>
+            <form @submit.prevent="props.onSubmit">
+                <!-- Modal body -->
+                <div class="space-y-6 p-6 overflow-y-auto max-h-[calc(100vh-210px)]">
+                    <slot name="body" />
+                </div>
+                <!-- Modal footer -->
+                <div
+                    class="space-x-2 rtl:space-x-reverse rounded-b border-t border-gray-200 p-6 dark:border-gray-600"
+                >
+                    <slot name="footer" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

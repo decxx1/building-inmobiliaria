@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\ZoneController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,17 +22,20 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
+
+Route::get('/',[PropertyController::class, 'indexWeb'])->name('index');
+Route::get('/inmuebles',[PropertyController::class, 'inmueblesWeb'])->name('inmuebles');
+Route::get('/inmueble/{id}',[PropertyController::class, 'inmueblesWebShow'])->name('inmuebles.show');
+//formularios de contacto
+Route::post('/consult',[ConsultationController::class, 'property'])->name('consult.property');
+Route::post('/consult',[ConsultationController::class, 'footer'])->name('consult.footer');
+
+Route::get('/admin', function () {
+    return Inertia::render('Admin', [
         'loginRegister' => '',
     ]);
-})->name('welcome');
+})->name('admin');
 
-Route::get('register', function () {
-    return Inertia::render('Welcome', [
-        'loginRegister' => 'sign-up-mode',
-    ]);
-})->name('register');
 
 Route::prefix('/app')->group(function () {
     Route::get('/dashboard', function () {
@@ -37,9 +44,15 @@ Route::prefix('/app')->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::get('/products',[UserController::class, 'index'])->name('products');
-        Route::get('/providers',[ProviderController::class, 'index'])->name('providers');
-        Route::post('/providers',[ProviderController::class, 'store'])->name('providers.store');
-        Route::put('/providers/{id}',[ProviderController::class, 'update'])->name('providers.update');
+        Route::get('/properties',[PropertyController::class, 'index'])->name('properties');
+        Route::post('/properties',[PropertyController::class, 'store'])->name('properties.store');
+        Route::post('/properties/{id}',[PropertyController::class, 'update'])->name('properties.update');
+        Route::delete('/properties/{id}',[PropertyController::class, 'destroy'])->name('properties.destroy');
+
+        Route::get('/images/{id}/{position}',[ImageController::class, 'destroy'])->name('images.destroy');
+
+        Route::get('/cities/{id}',[CityController::class, 'index'])->name('cities');
+        Route::get('/zones/{id}',[ZoneController::class, 'index'])->name('zones');
 
         Route::get('/users',[UserController::class, 'index'])->name('users');
         Route::post('/users',[UserController::class, 'store'])->name('users.store');
@@ -51,7 +64,9 @@ Route::prefix('/app')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     });
 });
+
 
 require __DIR__.'/auth.php';

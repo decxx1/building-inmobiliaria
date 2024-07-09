@@ -27,15 +27,9 @@ defineProps({
         </Link>
     </li>
     <li>
-        <Link :href="route('providers')" :class="[isActive('/app/providers'),'flex p-2 ps-5 text-gray-300 rounded [&.active]:shadow dark:text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,.1)] dark:hover:bg-gray-800 dark:hover:text-white [&.active]:text-white [&.active]:dark:text-white [&.active]:bg-primary-600 [&.active]:dark:bg-primary-800 group']">
-            <i :class="['icon-[fa-solid--truck-loading]',  isActive('/app/providers'), 'w-6 h-6 text-gray-300 dark:text-gray-400 group-hover:text-white [&.active]:text-white [&.active]:dark:text-white']"></i>
-            <span :class="[compact ? 'opacity-0 pointer-events-none' : 'opacity-100', 'absolute left-16 whitespace-nowrap transition-all ease-in duration-300']" >Proveedores</span>
-        </Link>
-    </li>
-    <li>
-        <Link :href="route('products')" :class="[isActive('/app/products'),'flex p-2 ps-5 text-gray-300 rounded [&.active]:shadow dark:text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,.1)] dark:hover:bg-gray-800 dark:hover:text-white [&.active]:text-white [&.active]:dark:text-white [&.active]:bg-primary-600 [&.active]:dark:bg-primary-800 group']">
-            <i :class="['icon-[fa-solid--boxes]',  isActive('/app/products'), 'w-6 h-6 text-gray-300 dark:text-gray-400 group-hover:text-white [&.active]:text-white [&.active]:dark:text-white']"></i>
-            <span :class="[compact ? 'opacity-0 pointer-events-none' : 'opacity-100', 'absolute left-16 whitespace-nowrap transition-all ease-in duration-300']" >Productos</span>
+        <Link :href="route('properties')" :class="[isActive('/app/properties'),'flex p-2 ps-5 text-gray-300 rounded [&.active]:shadow dark:text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,.1)] dark:hover:bg-gray-800 dark:hover:text-white [&.active]:text-white [&.active]:dark:text-white [&.active]:bg-primary-600 [&.active]:dark:bg-primary-800 group']">
+            <i :class="['icon-[tabler--building-community]',  isActive('/app/properties'), 'w-6 h-6 text-gray-300 dark:text-gray-400 group-hover:text-white [&.active]:text-white [&.active]:dark:text-white']"></i>
+            <span :class="[compact ? 'opacity-0 pointer-events-none' : 'opacity-100', 'absolute left-16 whitespace-nowrap transition-all ease-in duration-300']" >Inmuebles</span>
         </Link>
     </li>
     <li>

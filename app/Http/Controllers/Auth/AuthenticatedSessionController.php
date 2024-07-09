@@ -19,7 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Welcome', [
+        return Inertia::render('Admin', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);
@@ -48,6 +48,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect(route('admin'));
     }
 }

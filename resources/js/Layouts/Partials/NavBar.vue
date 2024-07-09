@@ -48,7 +48,7 @@ const handleMouseOut = () => {
                     </button>
                 </div>
                 <div class="flex items-center">
-                    <Notifications />
+                    <!-- <Notifications /> -->
                     <ColorModeSwitcher />
                     <UserMenu />
                 </div>

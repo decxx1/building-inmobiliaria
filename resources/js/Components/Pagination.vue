@@ -21,8 +21,8 @@ const props = defineProps({
 const totalPages = ref(props.total)
 const currentPage = ref(props.current)
 const ellipsis = "···"
-const pre = "Anterior"
-const next = "Siguiente"
+const pre = "<"
+const next = ">"
 const showPages = ref(true)
 
 const pages = computed ( () => {
@@ -109,11 +109,11 @@ watch(
 <style scoped>
 
 .pages-container {
-    --bg-selected: #2d88ff;
-    --bg-hover: #299BFF;
+    --bg-selected: #030c57;
+    --bg-hover: #030c5780;
     --background-color: white;
-    --border-color: #dee2e6;
-    --text-color: #2d88ff;
+    --border-color: #030c5770;
+    --text-color: #030c57;
     --text-selected: white;
 }
 .dark .pages-container {

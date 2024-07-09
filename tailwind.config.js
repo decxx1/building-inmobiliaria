@@ -20,6 +20,7 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 SourceSansPro: ['Source Sans Pro', 'sans-serif'],
                 Montserrat: ['Montserrat', 'sans-serif'],
+                Poppins: ['Poppins', 'sans-serif'],
             },
             colors:{
                 "primary": {
@@ -105,6 +106,20 @@ export default {
                 'background-semidark': '#191919',
                 'surface-dark': '#1e1e1e',
                 'backdrop-dark': '#121212d1',
+                "primary-web": {
+					50: "#E1E4FE",
+					100: "#C4CAFD",
+					200: "#8994FB",
+					300: "#5263F9",
+					400: "#172EF7",
+					500: "#071BCA",
+					600: "#05138F",
+					700: "#030C57",
+					800: "#02083B",
+					900: "#01041E",
+					950: "#01020F"
+				},
+				'body': '#f6f7ff',
             },
         },
     },
