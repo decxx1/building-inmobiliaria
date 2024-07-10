@@ -6,7 +6,7 @@ import SecondaryButton from '@/Components/ButtonSecondary.vue';
 import SuccessButton from '@/Components/ButtonSuccess.vue';
 import Card from '@/Components/Card.vue';
 import Modal from '@/Components/Modal.vue';
-import { countries } from '@/Hooks/countries.json';
+import { countries } from '@/Data/countries.json';
 const isShowModal = ref(false)
 const props = defineProps ({
     show: {
