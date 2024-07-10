@@ -1,6 +1,6 @@
 <template>
     <section
-        class="bg-[url('images/hero.avif')] bg-no-repeat bg-cover bg-center bg-gray-100 bg-blend-multiply dark:bg-gray-400">
+        class="bg-[url('/images/hero.avif')] bg-no-repeat bg-cover bg-center bg-gray-100 bg-blend-multiply dark:bg-gray-400">
         <div class="relative py-8 px-4 mx-auto max-w-screen-xl lg:py-52 xl:px-0 z-1">
             <div class="max-w-md text-center mx-auto min-h-96 justify-center flex">
                 <div class="bg-white p-4 dark:bg-gray-800 rounded bottom-24 lg:bottom-64 absolute">
