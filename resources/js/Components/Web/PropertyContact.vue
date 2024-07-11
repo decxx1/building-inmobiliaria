@@ -157,6 +157,7 @@ const sizeLetterClass = (number) => {
                 ></textarea>
                 <button
                     type="submit"
+                    :disabled="form.processing"
                     class="w-full font-medium text-sm py-2 text-white bg-primary-web-700 hover:bg-primary-web-600 focus:ring-4 focus:ring-primary-web-300 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
                 >Enviar</button>
             </form>

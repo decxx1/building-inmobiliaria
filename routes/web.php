@@ -29,6 +29,14 @@ Route::get('/inmueble/{id}',[PropertyController::class, 'inmueblesWebShow'])->na
 //formularios de contacto
 Route::post('/consult',[ConsultationController::class, 'property'])->name('consult.property');
 Route::post('/consult',[ConsultationController::class, 'footer'])->name('consult.footer');
+Route::post('/consult',[ConsultationController::class, 'contact'])->name('consult.contact');
+
+Route::get('/contacto', function () {
+    return Inertia::render('Contact', [
+        'loginRegister' => '',
+    ]);
+})->name('contacto');
+
 
 Route::get('/admin', function () {
     return Inertia::render('Admin', [

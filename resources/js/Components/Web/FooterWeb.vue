@@ -80,7 +80,7 @@ function handleSubmit(){
             </div>
             <div class="text-white text-center max-sm:py-4 sm:text-right sm:mt-10 sm:pr-4 lg:pr-8 xl:pr-12 max-sm:mx-auto">
                 <h4 class="font-bold text-2xl">Contáctenos</h4>
-                <p>Publique su inmueble con nosotros</p>
+                <p>Pida su tasación</p>
                 <form @submit.prevent="recaptcha" class="max-w-sm ml-auto mt-3 max-sm:px-2 sm:flex sm:flex-col sm:items-end">
                     <input
                         type="text"
@@ -97,6 +97,7 @@ function handleSubmit(){
                     ></textarea>
                     <button
                         type="submit"
+                        :disabled="form.processing"
                         class="w-3/6 text-primary-web-700 bg-white hover:bg-gray-200 focus:ring-4 focus:ring-primary-web-300 font-medium text-sm py-2 px-6 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
                     >
                         Enviar</button>

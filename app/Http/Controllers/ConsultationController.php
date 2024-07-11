@@ -23,16 +23,58 @@ class ConsultationController extends Controller
         ]);
 
         $validated = $validator->validated();
-        $title = 'Contacto por un inmueble, de: ';
-        $url = $validated['url'];
+
         $name = $validated['name'];
+        $title = 'Contacto por un inmueble - de:'.$name;
+        $url = $validated['url'];
         $phone = $validated['phone'];
         $message = $validated['message'];
 
-        $this->send($name, $message, $title, $phone, $url);
+        $this->send($name, $message, $title, $phone, null, $url);
     }
 
-    public function send($name, $message, $title, $phone = null, $url = null)
+    public function footer(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:50',
+            'message' => 'required|string|min:10',
+            'captcha_token'  => [new Recaptcha],
+        ]);
+
+        $validated = $validator->validated();
+
+        $name = $validated['name'];
+        $title = 'Contacto desde la web - de:'.$name;
+        $message = $validated['message'];
+
+        $this->send($name, $message, $title);
+    }
+
+    public function contact(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:50',
+            'email' => 'required|email',
+            'phone' => 'required|string|min:6',
+            'message' => 'required|string|min:10',
+            'captcha_token'  => [new Recaptcha],
+        ]);
+
+        $validated = $validator->validated();
+
+
+        $name = $validated['name'];
+        $title = 'Contacto desde la web - de:'.$name;
+        $message = $validated['message'];
+        $phone = $validated['phone'];
+        $email = $validated['email'];
+
+        $this->send($name, $message, $title, $phone, $email );
+    }
+
+    public function send($name, $message, $title, $phone = null, $email = null, $url = null)
     {
 
         $emailUserName = env('MAIL_USERNAME');
@@ -62,7 +104,9 @@ class ConsultationController extends Controller
 
             // Establecer el remitente que se mostrará en el campo "From"
             $mail->clearReplyTos(); // Eliminar las direcciones de respuesta anteriores (si las hubiera)
-            //$mail->addReplyTo($email, $name);
+            if($email){
+                $mail->addReplyTo($email, $name);
+            }
 
             $mail->CharSet = 'UTF-8';
 
@@ -71,6 +115,7 @@ class ConsultationController extends Controller
                 <ul style='font-size:16px;'>
                     <li><strong style='font-size:18px;'>Nombre:</strong> $name</li>";
             $body.= $phone ? "<li><strong style='font-size:18px;'>Teléfono:</strong> $phone</li>" : '';
+            $body.= $email ? "<li><strong style='font-size:18px;'>E-mail:</strong> $email</li>" : '';
             $body.= $url ? "<li><strong style='font-size:18px;'>Inmueble:</strong> <a href='$url'>Ir al inmueble</a></li>" : '';
             $body.="</ul>
                     <br/><br/>
@@ -79,7 +124,7 @@ class ConsultationController extends Controller
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = $title . $name;
+            $mail->Subject = $title;
             $mail->Body    = $body;
             //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
@@ -101,23 +146,5 @@ class ConsultationController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-    }
-
-    public function footer(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50',
-            'message' => 'required|string|min:10',
-            'captcha_token'  => [new Recaptcha],
-        ]);
-
-        $validated = $validator->validated();
-
-        $title = 'Contacto desde la web, de: ';
-        $name = $validated['name'];
-        $message = $validated['message'];
-
-        $this->send($name, $message, $title);
     }
 }
