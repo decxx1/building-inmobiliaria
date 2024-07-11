@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import Layout from '@/Layouts/Layout.vue';
 import HeaderWeb from '@/Components/Web/HeaderWeb.vue';
 import BreadCrums from '@/Components/Web/BreadCrumbsWeb.vue';
@@ -10,6 +10,8 @@ import FiltersPrice from '@/Components/FiltersPrice.vue';
 import Sidebar from '@/Components/Web/Sidebar.vue';
 import { ref, computed, watch } from 'vue';
 import { debounce } from 'lodash';
+//leer parámetros de la url
+const urlParams = new URLSearchParams(window.location.search)
 
 const props = defineProps({
     currentPage: {
@@ -85,8 +87,9 @@ const updatePropertiesList = debounce((page) => {
 }, 1000);
 
 //FILTERS
-const filterType = ref(0)
-const filterStatus = ref(0)
+const filterType = ref(Number(urlParams.get('type')) || 0)
+console.log(filterType.value)
+const filterStatus = ref(Number(urlParams.get('status')) || 0)
 const filterProvince = ref(0)
 const filterPrice = ref('all')
 const handleTypesChange = (value) => {
@@ -107,7 +110,7 @@ const handlePricesChange = (value) => {
 }
 
 //search bar
-const search = ref('');
+const search = ref(urlParams.get('search') || '');
 const priceMin = ref(0);
 const priceMax = ref(0);
 watch(
@@ -116,6 +119,7 @@ watch(
     updatePropertiesList(props.currentPage);
   },
 )
+
 //componentes
 const resetFilters = () => {
     filterType.value = 0

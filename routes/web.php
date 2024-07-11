@@ -32,16 +32,12 @@ Route::post('/consult',[ConsultationController::class, 'footer'])->name('consult
 Route::post('/consult',[ConsultationController::class, 'contact'])->name('consult.contact');
 
 Route::get('/contacto', function () {
-    return Inertia::render('Contact', [
-        'loginRegister' => '',
-    ]);
+    return Inertia::render('Contact');
 })->name('contacto');
 
 
 Route::get('/admin', function () {
-    return Inertia::render('Admin', [
-        'loginRegister' => '',
-    ]);
+    return Inertia::render('Admin');
 })->name('admin');
 
 

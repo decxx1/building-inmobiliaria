@@ -166,6 +166,9 @@ class PropertyController extends Controller
     {
         $properties = Property::orderBy('created_at', 'DESC');
 
+        $types = Type::all();
+        $statuses = Status::all();
+
         //Paginar
         $pagination = $properties->paginate(8);
 
@@ -180,6 +183,8 @@ class PropertyController extends Controller
 
         return Inertia::render('Index', [
             'properties' => $formattedProperties,
+            'types' => fn () => $types,
+            'statuses' => fn () => $statuses,
         ]);
     }
 

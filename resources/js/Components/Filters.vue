@@ -25,10 +25,11 @@ const props = defineProps({
 watch(
   () => props.current,
   () => {
-    if(props.current === 'all') currentFilterName.value = 'Todos'
+    if(props.current === 0) currentFilterName.value = 'Todos'
   },
 )
-const currentFilterName = ref('Todos');
+const initName = props.current !== 0 ? props.items[props.current - 1].name : 'Todos';
+const currentFilterName = ref(initName);
 const dropdown = ref(null);
 
 const handleFilterChange =  (filter, name) => {
