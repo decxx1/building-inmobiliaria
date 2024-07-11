@@ -4,7 +4,7 @@ import Hero from '@/Components/Web/Hero.vue'
 import HeaderWeb from '@/Components/Web/HeaderWeb.vue'
 import Features from '@/Components/Web/Features.vue'
 import LatestProperties from '@/Components/Web/LatestProperties.vue'
-
+import CallToAction from '@/Components/Web/CallToAction.vue'
 const props = defineProps({
     properties: {
         type: Array,
@@ -30,5 +30,6 @@ const props = defineProps({
         <LatestProperties
             :properties="props.properties"
         />
+        <CallToAction />
     </Layout>
 </template>
