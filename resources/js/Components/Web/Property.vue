@@ -140,7 +140,7 @@ const iconesProperty = () => {
 
 </script>
 <template>
-    <article class="cursor-pointer w-64 min-[310px]:w-72 sm:w-80 h-max bg-white border border-primary-web-700 shadow hover:shadow-primary-web-700 hover:scale-105 transition-all duration-300 dark:bg-gray-800 dark:border-gray-700">
+    <article class="cursor-pointer w-64 min-[310px]:w-72 sm:w-80 h-max bg-white border border-primary-web-700 shadow hover:shadow-primary-web-700 hover:scale-105 transition-all duration-300 dark:bg-gray-700 dark:border-gray-700">
         <Link :href="route('inmuebles.show', {id: id})">
             <header>
                 <figure class="relative">
@@ -148,9 +148,9 @@ const iconesProperty = () => {
                         <img class="w-full h-full object-cover" :src="imageCover ? imageCover : '/images/properties/sin-propiedad.svg'" alt="imagen de la propiedad" />
                     </span>
                     <figcaption class="absolute text-lg text-white top-4">
-                        <p class="text-white bg-primary-web-700 px-4 font-medium text-">{{ status }}</p>
+                        <p class="text-white bg-primary-web-700 px-4 font-medium dark:bg-gray-800">{{ status }}</p>
                     </figcaption>
-                    <figcaption class="absolute text-white -bottom-2 right-4 bg-primary-web-700 rounded px-2 pt-1">
+                    <figcaption class="absolute text-white -bottom-2 right-4 bg-primary-web-700 rounded px-2 pt-1 dark:bg-gray-800">
                         <span :class="['w-8 h-8', iconesProperty()]"></span>
                     </figcaption>
                 </figure>
@@ -164,9 +164,9 @@ const iconesProperty = () => {
                 </div>
 
             </div>
-            <div class="p-2">
+            <div class="p-2 text-left">
                 <h5 class="mb-2 text-xl font-bold tracking-tight text-primary-web-700 dark:text-white">{{ address }}</h5>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 inline" v-html="formattedDescription(description)"></p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-300 inline" v-html="formattedDescription(description)"></p>
                 <span v-if="description.length > 100"> (...)</span>
             </div>
             <footer class="bg-primary-web-700 dark:bg-gray-800 py-2">
