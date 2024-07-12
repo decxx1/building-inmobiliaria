@@ -86,17 +86,17 @@ const sizeLetterClass = (number) => {
 </script>
 
 <template>
-    <section class="bg-white border border-primary-web-700 dark:bg-gray-800 md:ml-8 max-md:mt-6">
-        <section class="text-primary-web-700 text-left px-4">
+    <section class="bg-white border border-primary-web-700 dark:bg-gray-800 dark:border-gray-600 md:ml-8 max-md:mt-6">
+        <section class="text-primary-web-700 text-left px-4 dark:text-white">
             <div v-if="!props.property.price_hidden && props.property.price_property">
-                <p :class="['text-primary-web-700 font-extrabold px-2 mt-4', sizeLetterClass(props.property.price_property)]">{{ props.property.is_price_dollar ? 'US$' : 'ARS$' }} {{ numberFormat(props.property.price_property) }}</p>
+                <p :class="['text-primary-web-700 font-extrabold px-2 mt-4 dark:text-white', sizeLetterClass(props.property.price_property)]">{{ props.property.is_price_dollar ? 'US$' : 'ARS$' }} {{ numberFormat(props.property.price_property) }}</p>
             </div>
             <div v-else>
-                <p class="text-primary-web-700 font-extrabold px-2 text-2xl mt-4">Consultar</p>
+                <p class="text-primary-web-700 font-extrabold px-2 text-2xl mt-4 dark:text-white">Consultar</p>
             </div>
-            <p class="text-primary-web-700 font-bold text-xl px-2 mt-2 uppercase">{{ props.property.status }}</p>
+            <p class="text-primary-web-700 font-bold text-xl px-2 mt-2 uppercase dark:text-gray-300">{{ props.property.status }}</p>
         </section>
-        <section class="bg-primary-web-700 text-white mt-6 px-4 py-4">
+        <section class="bg-primary-web-700 text-white mt-6 px-4 py-4 dark:bg-gray-900">
             <div class="grid grid-cols-2">
                 <div v-if="props.property.superficie_total" class="flex flex-row items-center mr-3">
                     <img class="w-10 mr-2" :src="baseUrl + 'images/icons-property/superficie.svg'" alt="superficie total de la propiedad" />
@@ -129,12 +129,12 @@ const sizeLetterClass = (number) => {
                     <i class="icon-[mdi--whatsapp] mr-2 w-5 h-5 lg:w-6 lg:h-6"></i>WhatsApp</a>
                 <a
                     :href="'tel:' + telphoneLinkeable"
-                    class="text-white bg-primary-web-700 p-2 text-md xl:text-lg inline-flex items-center justify-center"
+                    class="text-white bg-primary-web-700 p-2 text-md xl:text-lg inline-flex items-center justify-center dark:bg-gray-900"
                 ><i class="icon-[mdi--phone] mr-2 w-5 h-5 lg:w-6 lg:h-6"></i>Teléfono</a>
             </div>
         </section>
         <section class="text-center mx-auto px-4 pb-6">
-            <h4 class="font-normal text-2xl uppercase">Consultar</h4>
+            <h4 class="font-normal text-2xl uppercase text-primary-web-700 dark:text-white">Consultar</h4>
             <form @submit.prevent="recaptcha" class="mt-3">
                 <input
                     type="text"
