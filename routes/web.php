@@ -40,6 +40,7 @@ Route::get('/admin', function () {
     return Inertia::render('Admin');
 })->name('admin');
 
+Route::get('/cities/{id}',[CityController::class, 'index'])->name('cities');
 
 Route::prefix('/app')->group(function () {
     Route::get('/dashboard', function () {
@@ -55,7 +56,7 @@ Route::prefix('/app')->group(function () {
 
         Route::get('/images/{id}/{position}',[ImageController::class, 'destroy'])->name('images.destroy');
 
-        Route::get('/cities/{id}',[CityController::class, 'index'])->name('cities');
+
         Route::get('/zones/{id}',[ZoneController::class, 'index'])->name('zones');
 
         Route::get('/users',[UserController::class, 'index'])->name('users');

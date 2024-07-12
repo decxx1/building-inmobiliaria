@@ -94,7 +94,7 @@ onMounted(() => {
 
                     </div>
                 </li>
-                <li v-for="(item) in items" :key="item.id">
+                <li v-for="(item) in props.items" :key="item.id">
 
                     <div @click="handleFilterChange(item.id, item.name)" :class="[props.current === item.id ? 'active' : '', 'cursor-pointer flex items-center py-2 rounded border-primary-200 hover:bg-primary-50 dark:hover:bg-primary-900 [&.active]:bg-primary-100 dark:[&.active]:bg-primary-800']">
                         <label

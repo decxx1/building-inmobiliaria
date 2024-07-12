@@ -199,6 +199,7 @@ class PropertyController extends Controller
             'status' => 'nullable|integer',
             'user' => 'nullable|integer',
             'province' => 'nullable|integer',
+            'city' => 'nullable|integer',
             'price' => 'nullable|string', // Ajusta los valores permitidos según tu caso
             'priceMin' => 'nullable|numeric',
             'priceMax' => 'nullable|numeric',
@@ -221,6 +222,10 @@ class PropertyController extends Controller
         if(isset($validated['province']) && $validated['province'] != 0){
             $searchProvince = $validated['province'];
             $properties->where('province_id', $searchProvince);
+        }
+        if(isset($validated['city']) && $validated['city'] != 0){
+            $searchCity = $validated['city'];
+            $properties->where('city_id', $searchCity);
         }
         if(isset($validated['price']) && $validated['price'] != 'all'){
             $searchPrice = $validated['price'];

@@ -52,8 +52,6 @@ const props = defineProps({
     },
 });
 const form = useForm({});
-//pagination
-const create = ref(true);
 
 //showing items
 const startShowing = computed(() => {
@@ -70,7 +68,6 @@ const handlePageChange = (page) => {
     updatePropertiesList(page);
 }
 
-
 const updatePropertiesList = debounce((page) => {
     form.get(route('inmuebles', {
             page: page,
@@ -78,6 +75,7 @@ const updatePropertiesList = debounce((page) => {
             type: filterType.value,
             status: filterStatus.value,
             province: filterProvince.value,
+            city: filterCity.value,
             price: filterPrice.value,
             priceMin: priceMin.value,
             priceMax: priceMax.value,
@@ -98,8 +96,39 @@ const updatePropertiesList = debounce((page) => {
 const filterType = ref(Number(urlParams.get('type')) || 0)
 //console.log(filterType.value)
 const filterStatus = ref(Number(urlParams.get('status')) || 0)
-const filterProvince = ref(0)
+const filterProvince = ref(Number(urlParams.get('province')) || 0)
+const filterCity = ref(0)
 const filterPrice = ref('all')
+const cities = ref([]);
+
+const handleUpdateCities = () => {
+    fetch(route('cities', { id: filterProvince.value }), {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Error en la solicitud');
+        }
+    })
+    .then(data => {
+        cities.value = data.cities;
+        //console.log (cities.value);
+    })
+    .catch(error => {
+        if (error.message) {
+            console.error(error.message);
+        }
+    });
+}
+//solo se ejecuta al inicio si la provincia está seleccionada
+if(filterProvince.value > 0){
+    handleUpdateCities();
+}
 const handleTypesChange = (value) => {
     filterType.value = value;
     updatePropertiesList(props.currentPage);
@@ -110,6 +139,12 @@ const handleStatusesChange = (value) => {
 }
 const handleProvincesChange = (value) => {
     filterProvince.value = value;
+    filterCity.value = 0;
+    handleUpdateCities();
+    updatePropertiesList(props.currentPage);
+}
+const handleCitiesChange = (value) => {
+    filterCity.value = value;
     updatePropertiesList(props.currentPage);
 }
 const handlePricesChange = (value) => {
@@ -119,8 +154,8 @@ const handlePricesChange = (value) => {
 
 //search bar
 const search = ref(urlParams.get('search') || '');
-const priceMin = ref(0);
-const priceMax = ref(0);
+const priceMin = ref(Number(urlParams.get('priceMin')) || 0);
+const priceMax = ref(Number(urlParams.get('priceMax')) || 0);
 watch(
   () => [search.value, priceMin.value, priceMax.value],
   () => {
@@ -133,6 +168,7 @@ const resetFilters = () => {
     filterType.value = 0
     filterStatus.value = 0
     filterProvince.value = 0
+    filterCity.value = 0
     filterPrice.value = 'all'
     search.value = ''
     priceMin.value = 0
@@ -215,6 +251,15 @@ const resetFilters = () => {
                             :items="provinces"
                             extraClass="w-full"
                             :onChange="handleProvincesChange"
+                        />
+                    </div>
+                    <div class=" py-2">
+                        <Filters
+                            title="Ciudad"
+                            :current="filterCity"
+                            :items="cities"
+                            extraClass="w-full"
+                            :onChange="handleCitiesChange"
                         />
                     </div>
                     <div class=" py-2">

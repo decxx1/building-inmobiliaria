@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3';
 
 </script>
 <template>
-    <section class="bg-white dark:bg-gray-800 py-12">
+    <section class="bg-gradient-to-b from-body via-primary-web-100 to-body py-12">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-md text-center">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-primary-web-700 dark:text-white">
