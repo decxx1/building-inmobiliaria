@@ -58,8 +58,8 @@ function handleSubmit(){
 }
 </script>
 <template>
-    <footer class="p-2 sm:p-4 md:p-12">
-        <section class="bg-primary-web-700 dark:bg-gray-900 grid grid-cols-1 sm:grid-cols-3">
+    <footer class="p-2 sm:p-4 md:p-12 bg-body dark:bg-gray-900">
+        <section class="bg-primary-web-700 dark:bg-gray-800 grid grid-cols-1 sm:grid-cols-3">
             <div class="px-4 py-8 max-sm:mb-4">
                 <img :src="baseUrl + 'images/logos/building-inmobiliaria.webp'" class="w-56 mx-auto" alt="Building Inmobiliaria Logo" />
                 <div class="flex items-center justify-center mx-auto mt-8">
@@ -98,7 +98,7 @@ function handleSubmit(){
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="w-3/6 text-primary-web-700 bg-white hover:bg-gray-200 focus:ring-4 focus:ring-primary-web-300 font-medium text-sm py-2 px-6 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                        class="w-3/6 text-primary-web-700 bg-white hover:bg-gray-200 focus:ring-4 focus:ring-primary-web-300 font-medium text-sm py-2 px-6 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none dark:focus:ring-gray-800"
                     >
                         Enviar</button>
                 </form>

@@ -171,13 +171,13 @@ const iconesProperty = () => {
             </div>
             <footer class="bg-primary-web-700 dark:bg-gray-800 py-2">
                 <div class="px-2 flex flex-wrap flex-row justify-start text-white">
-                    <div v-if="superficieCubierta" class="flex flex-row items-center mr-3">
-                        <img class="w-6 mr-1" src="/images/icons-property/superficie.svg" alt="superficie cubierta de la propiedad" />
-                        <span>{{ superficieCubierta }} m2</span>
-                    </div>
                     <div v-if="superficieTotal" class="flex flex-row items-center mr-3">
                         <img class="w-6 mr-1" src="/images/icons-property/superficie.svg" alt="superficie total de la propiedad" />
                         <span>{{ superficieTotal }} m2</span>
+                    </div>
+                    <div v-if="superficieCubierta" class="flex flex-row items-center mr-3">
+                        <img class="w-5 mr-1" src="/images/icons-property/superficie_cubierta.svg" alt="superficie cubierta de la propiedad" />
+                        <span>{{ superficieCubierta }} m2</span>
                     </div>
                     <div v-if="banos && banos !== 'Indistinto'" class="flex flex-row items-center mr-3">
                         <img class="w-5 mr-1" src="/images/icons-property/bano2.svg" alt="baños que tiene la propiedad" />
@@ -185,11 +185,11 @@ const iconesProperty = () => {
                     </div>
                     <div v-if="dormitorios && dormitorios !== 'Indistinto'" class="flex flex-row items-center mr-3">
                         <img class="w-6 mr-1" src="/images/icons-property/dormitorio2.svg" alt="habitaciones que tiene la propiedad" />
-                        <span>2</span>
+                        <span>{{ dormitorios }}</span>
                     </div>
                     <div v-if="cochera && cochera !== 'Indistinto'" class="flex flex-row items-center mr-3">
                         <img class="w-6 mr-1" src="/images/icons-property/cochera.svg" alt="tiene cochera el inmueble" />
-                        <span>si</span>
+                        <span>{{ cochera === 'Sin cochera' ? 'No' : 'Si' }}</span>
                     </div>
                 </div>
             </footer>

@@ -88,7 +88,7 @@ const updatePropertiesList = debounce((page) => {
 
 //FILTERS
 const filterType = ref(Number(urlParams.get('type')) || 0)
-console.log(filterType.value)
+//console.log(filterType.value)
 const filterStatus = ref(Number(urlParams.get('status')) || 0)
 const filterProvince = ref(0)
 const filterPrice = ref('all')
@@ -165,7 +165,7 @@ const resetFilters = () => {
         <div class="grid gap-4 grid-cols-12 container mx-auto">
             <div class="col-span-12 min-[1023px]:col-span-4 min-[1279px]:col-span-3 min-[1610px]:col-span-2">
                 <Sidebar>
-                    <h5 id="drawer-navigation-label" class="text-base font-semibold text-primary-web-700 uppercase dark:text-gray-400 mb-4">Buscar</h5>
+                    <h5 id="drawer-navigation-label" class="text-base font-semibold text-primary-web-700 uppercase dark:text-gray-300 mb-4">Buscar</h5>
                     <div class="relative w-full mb-6">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <i class="icon-[mdi--search] w-5 h-5 text-gray-500 dark:text-white"></i>
@@ -174,13 +174,13 @@ const resetFilters = () => {
                             v-model="search"
                             type="text"
                             id="simple-search"
-                            class="bg-white border border-primary-web-700 text-gray-900 text-sm focus:ring-primary-web-500 focus:border-primary-web-500 block w-full pl-10 p-2 dark:bg-background-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-white border border-primary-web-700 text-gray-900 text-sm focus:ring-primary-web-500 focus:border-primary-web-500 block w-full pl-10 p-2 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Buscar"
                         />
                     </div>
                     <div class="flex justify-between">
-                        <h5 class="text-base font-semibold text-primary-web-700 uppercase dark:text-gray-400 mb-4 inline">Filtros</h5>
-                        <span @click="resetFilters" class="cursor-pointer hover:font-bold">Reiniciar</span>
+                        <h5 class="text-base font-semibold text-primary-web-700 uppercase dark:text-gray-300 mb-4 inline">Filtros</h5>
+                        <span @click="resetFilters" class="cursor-pointer hover:font-bold text-gray-700 dark:text-gray-400">Reiniciar</span>
                     </div>
                     <div class=" py-2">
                         <Filters
@@ -226,7 +226,7 @@ const resetFilters = () => {
                                     v-model="priceMin"
                                     id="input-desde"
                                     aria-describedby="helper-text-explanation"
-                                    class="w-full bg-white border border-primary-web-700 text-gray-900 text-sm focus:ring-primary-web-500 focus:border-primary-web-500 block py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-web-500 dark:focus:border-primary-web-500"
+                                    class="w-full bg-white border border-primary-web-700 text-gray-900 text-sm focus:ring-primary-web-500 focus:border-primary-web-500 block py-1.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-web-500 dark:focus:border-primary-web-500"
                                     placeholder="0"
                                 />
                             </div>
@@ -237,7 +237,7 @@ const resetFilters = () => {
                                     v-model="priceMax"
                                     id="input-hasta"
                                     aria-describedby="helper-text-explanation"
-                                    class="w-full bg-white border border-primary-web-700 text-gray-900 text-sm focus:ring-primary-web-500 focus:border-primary-web-500 block py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-web-500 dark:focus:border-primary-web-500"
+                                    class="w-full bg-white border border-primary-web-700 text-gray-900 text-sm focus:ring-primary-web-500 focus:border-primary-web-500 block py-1.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-web-500 dark:focus:border-primary-web-500"
                                     placeholder="0"
                                 />
                             </div>

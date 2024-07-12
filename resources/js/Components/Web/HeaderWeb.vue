@@ -69,7 +69,7 @@ onMounted(() => {
 
     <div class="header-container"></div>
     <header :class="[props.heroPage ? 'sm:absolute sm:top-12 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg sm:left-1/2 sm:transform sm:-translate-x-1/2' : '', 'header sticky top-0 z-50 w-full transition-[margin] duration-300']">
-        <nav class="bg-primary-web-700 px-4 lg:px-6 dark:bg-gray-800 border-primary-web-700 dark:border-gray-700 border-y">
+        <nav class="bg-primary-web-700 px-4 lg:px-6 dark:bg-gray-900 border-primary-web-700 dark:border-gray-800 border-y">
             <div class="flex flex-wrap justify-between items-center mx-auto sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg">
                 <Link :href="route('index')" class="flex items-center py-2">
                     <img loading="lazy" :src="baseUrl +'images/logos/building-inmobiliaria-ancho.webp'" class="mr-4 h-12" alt="Building Inmobiliaria Logo" />

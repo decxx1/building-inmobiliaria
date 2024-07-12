@@ -98,13 +98,13 @@ const sizeLetterClass = (number) => {
         </section>
         <section class="bg-primary-web-700 text-white mt-6 px-4 py-4">
             <div class="grid grid-cols-2">
-                <div v-if="props.property.superficie_cubierta" class="flex flex-row items-center mr-3">
-                    <img class="w-10 mr-2" :src="baseUrl + 'images/icons-property/superficie.svg'" alt="superficie cubierta de la propiedad" />
-                    <span>{{ props.property.superficie_cubierta }} m2</span>
-                </div>
                 <div v-if="props.property.superficie_total" class="flex flex-row items-center mr-3">
                     <img class="w-10 mr-2" :src="baseUrl + 'images/icons-property/superficie.svg'" alt="superficie total de la propiedad" />
                     <span>{{ props.property.superficie_total }} m2</span>
+                </div>
+                <div v-if="props.property.superficie_cubierta" class="flex flex-row items-center mr-3">
+                    <img class="w-10 mr-2" :src="baseUrl + 'images/icons-property/superficie_cubierta.svg'" alt="superficie cubierta de la propiedad" />
+                    <span>{{ props.property.superficie_cubierta }} m2</span>
                 </div>
                 <div v-if="props.property.banos && props.property.banos !== 'Indistinto'" class="flex flex-row items-center mr-3">
                     <img class="w-10 mr-2" :src="'images/icons-property/bano2.svg'" alt="baños que tiene la propiedad" />
@@ -116,7 +116,7 @@ const sizeLetterClass = (number) => {
                 </div>
                 <div v-if="props.property.cochera && props.property.cochera !== 'Indistinto'" class="flex flex-row items-center mr-3">
                     <img class="w-10 mr-2" :src="baseUrl + 'images/icons-property/cochera.svg'" alt="tiene cochera el inmueble" />
-                    <span>{{ props.property.cochera }}</span>
+                    <span>{{ props.property.cochera === 'Sin cochera' ? 'No' : 'Si' }}</span>
                 </div>
             </div>
         </section>

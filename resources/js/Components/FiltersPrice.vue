@@ -54,7 +54,7 @@ onMounted(() => {
         <label class="block mb-2 text-sm font-semibold text-primary-web-700 dark:text-white">{{ title }}</label>
         <button
             :id="'dropFilters'+title"
-            class="w-full flex justify-between items-center text-primary-web-700 bg-white border border-primary-web-700 focus:outline-none hover:bg-primary-web-100 focus:ring-4 focus:ring-primary-web-100 font-medium text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            class="w-full flex justify-between items-center text-primary-web-700 bg-white border border-primary-web-700 focus:outline-none hover:bg-primary-web-100 focus:ring-4 focus:ring-primary-web-100 font-medium text-sm px-3 py-1.5 dark:bg-gray-900 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
             type="button"
         >
             <svg class="w-3 h-3 text-primary-900 dark:text-gray-400 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
