@@ -107,7 +107,7 @@ const sizeLetterClass = (number) => {
                     <span>{{ props.property.superficie_cubierta }} m2</span>
                 </div>
                 <div v-if="props.property.banos && props.property.banos !== 'Indistinto'" class="flex flex-row items-center mr-3">
-                    <img class="w-10 mr-2" :src="'images/icons-property/bano2.svg'" alt="baños que tiene la propiedad" />
+                    <img class="w-10 mr-2" :src="baseUrl + 'images/icons-property/bano2.svg'" alt="baños que tiene la propiedad" />
                     <span>{{ props.property.banos }}</span>
                 </div>
                 <div v-if="props.property.dormitorios && props.property.dormitorios !== 'Indistinto'" class="flex flex-row items-center mr-3">

@@ -1,5 +1,6 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
 import Layout from '@/Layouts/Layout.vue';
 import HeaderWeb from '@/Components/Web/HeaderWeb.vue';
 import BreadCrums from '@/Components/Web/BreadCrumbsWeb.vue';
@@ -10,6 +11,13 @@ import FiltersPrice from '@/Components/FiltersPrice.vue';
 import Sidebar from '@/Components/Web/Sidebar.vue';
 import { ref, computed, watch } from 'vue';
 import { debounce } from 'lodash';
+import {
+    initDrawers,
+} from 'flowbite';
+router.on('navigate', (event) => {
+    initDrawers();
+})
+
 //leer parámetros de la url
 const urlParams = new URLSearchParams(window.location.search)
 

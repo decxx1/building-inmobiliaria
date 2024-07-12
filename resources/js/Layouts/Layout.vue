@@ -1,7 +1,9 @@
 <script setup>
 import { Toaster } from 'vue-sonner';
+import { router } from '@inertiajs/vue3'
 import FooterWeb from '@/Components/Web/FooterWeb.vue';
 import WhatsAppButton from '@/Components/Web/WhatsAppButton.vue';
+import { onMounted } from 'vue';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
@@ -10,9 +12,20 @@ import '@fontsource/poppins/800.css';
 import '@fontsource/poppins/900.css';
 import {
     initDropdowns,
+    initCollapses,
 } from 'flowbite';
 
-initDropdowns();
+onMounted(() => {
+    initDropdowns();
+    initCollapses();
+
+})
+router.on('navigate', (event) => {
+    initDropdowns();
+    initCollapses();
+})
+
+
 </script>
 <template>
     <Toaster
