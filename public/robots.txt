@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /public/
+Disallow: /admin/
+
+Sitemap: https://inmobiliariabuilding.com.ar/sitemap.xml
