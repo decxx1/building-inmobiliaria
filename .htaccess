@@ -1,12 +1,14 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
     # Redirigir permanentemente cualquier solicitud de /public a la raíz
-    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/public/([^\s]*) [NC]
-    RewriteRule ^ public/%1 [R=301,L]
+    RewriteCond %{THE_REQUEST} /public/ [NC]
+    RewriteRule ^public/(.*)$ /$1 [L,R=301]
 
     # Redirigir todas las solicitudes a la carpeta public
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ public/$1 [L]
+
 </IfModule>
