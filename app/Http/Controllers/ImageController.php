@@ -24,6 +24,16 @@ class ImageController extends Controller
         $APP_URL = env('APP_URL');
         $image->thumbnail = $image->thumbnail ? $APP_URL.$image->thumbnail : '';
         $image->original = $image->original ? $APP_URL.$image->original : '';
+        // Obtener las dimensiones de la imagen original
+        if ($image->original) {
+            $path = public_path(str_replace($APP_URL, '', $image->original));
+            $img = ImageIntervention::read($path);
+            $image->width = $img->width();
+            $image->height = $img->height();
+        } else {
+            $image->width = null;
+            $image->height = null;
+        }
         return $image;
     }
 

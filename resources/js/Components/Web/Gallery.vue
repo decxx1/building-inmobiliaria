@@ -1,5 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,onMounted, onUnmounted } from 'vue';
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import 'photoswipe/style.css';
+
+const galleryID = ref('galleryID')
+const lightbox = ref(null)
+
+onMounted(() => {
+    if (!lightbox.value) {
+      lightbox.value = new PhotoSwipeLightbox({
+        gallery: '#' + galleryID.value,
+        children: 'a',
+        mouseMovePan: true,
+        showHideAnimationType: 'zoom',
+        initialZoomLevel: 'fit',
+        secondaryZoomLevel: 1.5,
+        maxZoomLevel: 1,
+
+        imageClickAction: 'close',
+        tapAction: 'close',
+        pswpModule: () => import('photoswipe'),
+      });
+      lightbox.value.init();
+    }
+})
+onUnmounted(() => {
+    if (lightbox.value) {
+      lightbox.value.destroy();
+      lightbox.value = null;
+    }
+})
 const props = defineProps({
     images: {
         type: Object,
@@ -16,15 +46,10 @@ const handleImageOriginal = (image) => {
 <template>
 
     <section class="container px-6 py-12 mx-auto">
-        <div class="grid sm:grid-cols-12 gap-4 items-center">
-            <div class="col-span-12 md:col-span-8 mx-auto">
-                <img class="w-full sm:h-96 sm:w-auto max-w-full rounded" :src="imageOriginal" alt="">
-            </div>
-            <div class="col-span-12 md:col-span-4 grid grid-cols-3 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                <div v-for="image in props.images" :key="image.id">
-                    <img @click="handleImageOriginal(image.original)" class="w-full sm:h-32 sm:max-w-full rounded hover:scale-105 cursor-pointer" :src="image.thumbnail" alt="">
-                </div>
-            </div>
+        <div :id="galleryID" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-center justify-center">
+            <a v-for="image in props.images" :href="image.original" :data-pswp-width="image.width" :data-pswp-height="image.height" target="_blank" :key="image.id">
+                <img class="w-full h-20 sm:h-32 object-cover rounded hover:scale-105 cursor-pointer transition-all transform hover:-rotate-3" :src="image.thumbnail" alt="">
+            </a>
         </div>
     </section>
 
