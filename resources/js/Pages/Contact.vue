@@ -68,7 +68,14 @@ function handleSubmit(){
 </script>
 
 <template>
-    <Layout>
+    <Layout
+        title="Contacto"
+        canonical="https://inmobiliariabuilding.com.ar/contacto"
+        metaTitle="Contacto - Building Inmobiliaria"
+        metaDescription="Contacte con nosotros por consultas de inmuebles en venta o alquiler, solicite una tasación para su propiedad, o envénos un correo para ponernos en contacto con usted."
+        metaImg="https://inmobiliariabuilding.com.ar/images/breadcrumbs.avif"
+        preLoad="images/breadcrumbs.avif"
+    >
         <HeaderWeb :heroPage="false" />
         <section class="bg-white dark:bg-gray-900">
             <div class="bg-[url('/images/breadcrumbs.avif')] bg-no-repeat bg-cover bg-center bg-gray-500 dark:bg-gray-600 bg-blend-multiply">

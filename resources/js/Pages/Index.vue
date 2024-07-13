@@ -23,7 +23,14 @@ const props = defineProps({
 </script>
 
 <template>
-    <Layout>
+    <Layout
+        title="Inicio"
+        canonical="https://inmobiliariabuilding.com.ar/"
+        metaTitle="Building Inmobiliaria"
+        metaDescription="Building Inmobiliaria en Argentina. ¿Quieres vender o alquilar tu propiedad con nosotros? te enviaremos un corredor inmobiliario a tu domicilio"
+        metaImg="https://inmobiliariabuilding.com.ar/images/hero.avif"
+        preLoad="images/hero.avif"
+    >
         <HeaderWeb :heroPage="true" />
         <Hero :types="props.types" :statuses="props.statuses" />
         <Features />

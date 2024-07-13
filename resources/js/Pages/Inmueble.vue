@@ -7,6 +7,9 @@ import PropertyInfo from '@/Components/Web/PropertyInfo.vue';
 import PropertyContact from '@/Components/Web/PropertyContact.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import {
+    baseUrl,
+} from '@/Services/env.js';
 const props = defineProps({
     property: {
         type: Object,
@@ -28,11 +31,16 @@ const images = [
     props.property.currentImageExtra6
 ].filter(isValidImageObject)
 
-
-//console.log(imagesExtra)
 </script>
 <template>
-    <Layout>
+    <Layout
+        title="Inmueble"
+        :canonical="baseUrl + 'inmueble/' + props.property.id"
+        :metaTitle="props.property.status + props.property.type + props.property.address"
+        :metaDescription="props.property.description.slice(0, 155)"
+        :metaImg="props.property.currentImageCover.thumbnail"
+        :preLoad="props.property.currentImageCover.original"
+    >
         <HeaderWeb :heroPage="false" />
         <BreadCrums
             :page="props.property.status + ' - ' + props.property.type"

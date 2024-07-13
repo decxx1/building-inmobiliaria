@@ -177,7 +177,14 @@ const resetFilters = () => {
 }
 </script>
 <template>
-    <Layout>
+    <Layout
+        title="Inmuebles"
+        canonical="https://inmobiliariabuilding.com.ar/inmuebles"
+        metaTitle="Inmuebles - Building Inmobiliaria"
+        metaDescription="Venta y alquileres de casas, departamentos, terrenos, oficinas. Todos los inmuebles que ofrece Building Inmobiliaria en Argentina ¿Deseas tasar tu propiedad?"
+        metaImg="https://inmobiliariabuilding.com.ar/images/breadcrumbs.avif"
+        preLoad="images/breadcrumbs.avif"
+    >
         <HeaderWeb :heroPage="false" />
         <BreadCrums page="Inmuebles" path="inmuebles" />
         <section class="container px-6 py-12 mx-auto">
