@@ -4,11 +4,6 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
-import "leaflet/dist/images/layers-2x.png";
-import "leaflet/dist/images/layers.png";
-import "leaflet/dist/images/marker-icon-2x.png";
-import "leaflet/dist/images/marker-icon.png";
-import "leaflet/dist/images/marker-shadow.png";
 import L from "leaflet";
 
 export default {
@@ -22,6 +17,7 @@ export default {
     return {
       map: null,
       marker: null,
+      icon:null,
     };
   },
   mounted() {
@@ -33,7 +29,16 @@ export default {
         this.map.remove();
       }
       this.map = L.map("leafletMap").setView(this.latLng, 15);
+      this.icon = L.icon({
+            iconUrl: '/images/markers/marker-icon.png',
+            shadowUrl: '/images/markers/marker-shadow.png',
 
+            iconSize:     [25, 41], // size of the icon
+            shadowSize:   [45, 64], // size of the shadow
+            iconAnchor:   [18, 46], // point of the icon which will correspond to marker's location
+            shadowAnchor: [15, 74],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "",
       }).addTo(this.map);
@@ -47,7 +52,7 @@ export default {
           this.map.removeLayer(this.marker);
         }
         //agregamos el marcador
-        this.marker = L.marker(this.latLng, { draggable: false }).addTo(
+        this.marker = L.marker(this.latLng, { icon:this.icon, draggable: false }).addTo(
           this.map
         );
         this.map.setView(this.latLng, this.map.getZoom());
