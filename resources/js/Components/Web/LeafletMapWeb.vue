@@ -30,8 +30,8 @@ export default {
       }
       this.map = L.map("leafletMap").setView(this.latLng, 15);
       this.icon = L.icon({
-            iconUrl: '/images/markers/marker-icon.png',
-            shadowUrl: '/images/markers/marker-shadow.png',
+            iconUrl: '/inmueble/marker-icon.png',
+            shadowUrl: '/inmueble/marker-shadow.png',
 
             iconSize:     [25, 41], // size of the icon
             shadowSize:   [45, 64], // size of the shadow
