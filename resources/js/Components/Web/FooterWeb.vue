@@ -104,5 +104,6 @@ function handleSubmit(){
                 </form>
             </div>
         </section>
+        <p class="max-sm:mb-20 text-center font-semibold text-primary-web-700 mt-5 text-lg">Diseñado por <a class="font-bold hover:text-primary-web-400" href="https://manejoweb.com.ar" target="_blank">Manejo Web</a></p>
     </footer>
 </template>
