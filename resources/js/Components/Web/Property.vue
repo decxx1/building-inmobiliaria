@@ -1,6 +1,9 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import ButtonIcon from '@/Components/ButtonIcon.vue';
+import {
+    baseUrl,
+} from '@/Services/env.js';
 const props = defineProps({
     id: {
         type: Number,
@@ -145,11 +148,11 @@ const iconesProperty = () => {
 </script>
 <template>
     <article class="cursor-pointer w-64 min-[310px]:w-72 sm:w-80 h-max bg-white border border-primary-web-700 shadow hover:shadow-primary-web-700 hover:scale-105 transition-all duration-300 dark:bg-gray-700 dark:border-gray-700">
-        <Link :href="route('inmuebles.show', {id: id})">
+        <Link :href="props.admin ? '' : route('inmuebles.show', {id: id})">
             <header>
                 <figure class="relative">
                     <span class="w-full h-56 block">
-                        <img class="w-full h-full object-cover" :src="imageCover ? imageCover : '/images/properties/sin-propiedad.svg'" alt="imagen de la propiedad" />
+                        <img class="w-full h-full object-cover" :src="imageCover ? imageCover : baseUrl + 'images/properties/sin-propiedad.svg'" alt="imagen de la propiedad" />
                         <div v-if="props.admin && !props.active" class="absolute right-0 top-0 h-16 w-16">
                             <div class="absolute rounded-tl-3xl rounded-tr-3xl transform rotate-45 bg-danger-600 text-center text-white font-bold py-1 right-[-19px] top-[35px] w-[140px]">
                                 Inactivo
