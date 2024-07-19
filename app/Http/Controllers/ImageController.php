@@ -16,6 +16,12 @@ class ImageController extends Controller
         $result = $image ? $APP_URL.$image->thumbnail : '';
         return $result;
     }
+    public function getOriginal(int $property_id, int $position){
+        $image = Image::where('property_id', $property_id)->where('position', $position)->first();
+        $APP_URL = env('APP_URL');
+        $result = $image ? $APP_URL.$image->original : '';
+        return $result;
+    }
     public function getImageFull(int $property_id, int $position){
         $image = Image::where('property_id', $property_id)->where('position', $position)->first();
         if(!$image){

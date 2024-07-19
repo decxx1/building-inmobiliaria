@@ -39,10 +39,10 @@ class Property extends Model implements Sitemapable
             ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
             ->setPriority(0.2);
         $imageController = new ImageController();
-        $imageCover = $imageController->getThumb($this->id, 1);
+        $imageCover = $imageController->getOriginal($this->id, 1);
         $sitemap->addImage($imageCover, 'cover');
         for ($i = 2; $i <= 6; $i++) {
-            $imagePath = $imageController->getThumb($this->id, $i);
+            $imagePath = $imageController->getOriginal($this->id, $i);
             if (!empty($imagePath)) {
                 $sitemap->addImage($imagePath, 'Image extra '.$i);
             }
