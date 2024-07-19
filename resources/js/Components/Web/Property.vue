@@ -6,6 +6,10 @@ const props = defineProps({
         type: Number,
         required: true
     },
+    active: {
+        type: Boolean,
+        required: false
+    },
     status: {
         type: String,
         required: true
@@ -146,6 +150,11 @@ const iconesProperty = () => {
                 <figure class="relative">
                     <span class="w-full h-56 block">
                         <img class="w-full h-full object-cover" :src="imageCover ? imageCover : '/images/properties/sin-propiedad.svg'" alt="imagen de la propiedad" />
+                        <div v-if="props.admin && !props.active" class="absolute right-0 top-0 h-16 w-16">
+                            <div class="absolute rounded-tl-3xl rounded-tr-3xl transform rotate-45 bg-danger-600 text-center text-white font-bold py-1 right-[-19px] top-[35px] w-[140px]">
+                                Inactivo
+                            </div>
+                        </div>
                     </span>
                     <figcaption class="absolute text-lg text-white top-4">
                         <p class="text-white bg-primary-web-700 px-4 font-medium dark:bg-gray-800">{{ status }}</p>

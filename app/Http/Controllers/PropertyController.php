@@ -135,7 +135,7 @@ class PropertyController extends Controller
     public function inmueblesWebShow(int $id):Response
     {
         //validar si se encontró el inmueble
-        $property = Property::findOrFail($id);
+        $property = Property::where('active', 1)->findOrFail($id);
 
         //agregar las relaciones
         $property->province = Province::where('id', $property->province_id)->pluck('name')->first();
@@ -164,7 +164,7 @@ class PropertyController extends Controller
 
     public function indexWeb():Response
     {
-        $properties = Property::orderBy('created_at', 'DESC');
+        $properties = Property::where('active', 1)->orderBy('created_at', 'DESC');
 
         $types = Type::all();
         $statuses = Status::all();
@@ -209,7 +209,7 @@ class PropertyController extends Controller
         // Obtener los datos validados
         $validated = $validator->validated();
 
-        $properties = Property::orderBy('created_at', 'DESC');
+        $properties = Property::where('active', 1)->orderBy('created_at', 'DESC');
         //si se activa un filtro
         if(isset($validated['type']) && $validated['type'] != 0){
             $searchType = $validated['type'];

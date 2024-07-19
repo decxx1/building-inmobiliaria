@@ -3,6 +3,8 @@
 /node_modules
 /public/build
 /public/hot
+/public/avatars
+/public/images/properties
 /public/storage
 /storage/*.key
 /vendor

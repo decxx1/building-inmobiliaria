@@ -590,6 +590,7 @@ const resetFilters = () => {
                                 v-for="item in props.properties"
                                 :key="item.id"
                                 :id="item.id"
+                                :active="item.active"
                                 :imageCover="item.currentImageCover"
                                 :status="item.status"
                                 :type="item.type"
@@ -670,8 +671,8 @@ const resetFilters = () => {
                     <Card colorHeader="primary">
                         <div class="grid gap-4 sm:grid-cols-2">
                             <div class="flex items-center">
-                                <input v-model="form.active" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Publicar en la web</label>
+                                <input id="checkbox-active-form" v-model="form.active" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checkbox-active-form" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Publicar en la web</label>
                             </div>
                         </div>
                     </Card>
