@@ -1,23 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+    <url>
+        <loc>http://127.0.0.1:8000/</loc>
+    
+            </url>
+    <url>
+        <loc>http://127.0.0.1:8000/inmuebles</loc>
+        <lastmod>2024-07-10T00:00:00+00:00</lastmod>
 
+            </url>
+    <url>
+        <loc>http://127.0.0.1:8000/contacto</loc>
+        <lastmod>2024-07-10T00:00:00+00:00</lastmod>
 
-<url>
-  <loc>https://inmobiliariabuilding.com.ar/</loc>
-  <lastmod>2024-07-13T16:19:13+00:00</lastmod>
-</url>
-<url>
-  <loc>https://inmobiliariabuilding.com.ar/inmuebles</loc>
-  <lastmod>2024-07-13T16:19:13+00:00</lastmod>
-</url>
-<url>
-  <loc>https://inmobiliariabuilding.com.ar/contacto</loc>
-  <lastmod>2024-07-13T16:19:13+00:00</lastmod>
-</url>
+            </url>
+    <url>
+        <loc>http://127.0.0.1:8000/inmueble/1</loc>
+        <lastmod>2024-07-06T23:48:11+00:00</lastmod>
 
+    <image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/1/thumb__6689d5cc41042.webp</image:loc>
+    <image:caption>cover</image:caption>
+</image:image>
+        </url>
+    <url>
+        <loc>http://127.0.0.1:8000/inmueble/2</loc>
+        <lastmod>2024-07-07T16:37:53+00:00</lastmod>
 
+    <image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/2/thumb__668ac4618b895.webp</image:loc>
+    <image:caption>cover</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/2/thumb__668ac462e778e.webp</image:loc>
+    <image:caption>Image extra 2</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/2/thumb__668ac4631d0f5.webp</image:loc>
+    <image:caption>Image extra 3</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/2/thumb__668ac4632c82d.webp</image:loc>
+    <image:caption>Image extra 4</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/2/thumb__668ac46355af0.webp</image:loc>
+    <image:caption>Image extra 5</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/2/thumb__668ac4637ee1e.webp</image:loc>
+    <image:caption>Image extra 6</image:caption>
+</image:image>
+        </url>
+    <url>
+        <loc>http://127.0.0.1:8000/inmueble/3</loc>
+        <lastmod>2024-07-07T16:39:40+00:00</lastmod>
+
+    <image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/3/thumb__668ac4cc80f75.webp</image:loc>
+    <image:caption>cover</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/3/thumb__668ac4ccadb10.webp</image:loc>
+    <image:caption>Image extra 2</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/3/thumb__668ac4cd0a0bc.webp</image:loc>
+    <image:caption>Image extra 5</image:caption>
+</image:image>
+        </url>
+    <url>
+        <loc>http://127.0.0.1:8000/inmueble/4</loc>
+        <lastmod>2024-07-07T22:23:41+00:00</lastmod>
+
+    <image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/4/thumb__668b156d9582c.webp</image:loc>
+    <image:caption>cover</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/4/thumb__668b156f0c06a.webp</image:loc>
+    <image:caption>Image extra 2</image:caption>
+</image:image>
+<image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/4/thumb__668b156f363d6.webp</image:loc>
+    <image:caption>Image extra 3</image:caption>
+</image:image>
+        </url>
+    <url>
+        <loc>http://127.0.0.1:8000/inmueble/5</loc>
+        <lastmod>2024-07-11T23:59:52+00:00</lastmod>
+
+    <image:image>
+    <image:loc>http://127.0.0.1:8000/images/properties/5/thumb__669071f8e4c3e.webp</image:loc>
+    <image:caption>cover</image:caption>
+</image:image>
+        </url>
 </urlset>

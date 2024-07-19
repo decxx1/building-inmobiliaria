@@ -22,7 +22,6 @@ use Inertia\Inertia;
 |
 */
 
-
 Route::get('/',[PropertyController::class, 'indexWeb'])->name('index');
 Route::get('/inmuebles',[PropertyController::class, 'inmueblesWeb'])->name('inmuebles');
 Route::get('/inmueble/{id}',[PropertyController::class, 'inmueblesWebShow'])->name('inmuebles.show');
