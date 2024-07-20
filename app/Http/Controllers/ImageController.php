@@ -50,7 +50,7 @@ class ImageController extends Controller
             $newName = 'original_'. '_' . uniqid(). '.' . $ext;
             $destination = 'images/properties/'.$id;
 
-             // Obtener la ruta completa del destino
+            // Obtener la ruta completa del destino
             $rootPath = public_path($destination);
 
             // Crear el directorio si no existe

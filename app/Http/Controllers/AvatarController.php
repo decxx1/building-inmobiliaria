@@ -24,6 +24,15 @@ class AvatarController extends Controller
             $newName = 'original_'. '_' . uniqid(). '.' . $ext;
             $destination = 'avatars/'.$id;
 
+            // Obtener la ruta completa del destino
+            $rootPath = public_path($destination);
+
+            // Crear el directorio si no existe
+            if (!file_exists($rootPath)) {
+                mkdir($rootPath, 0775, true);
+                chmod($rootPath, 0775);
+            }
+
             // Guardar la imagen en un directorio
             $imagePath = $file->storeAs($destination, $newName,['disk' => 'public_uploads']);
             // crear miniatura
