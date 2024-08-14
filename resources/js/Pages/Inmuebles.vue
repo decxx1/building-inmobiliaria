@@ -183,7 +183,7 @@ const resetFilters = () => {
         metaTitle="Inmuebles - Building Inmobiliaria"
         metaDescription="Venta y alquileres de casas, departamentos, terrenos, oficinas. Todos los inmuebles que ofrece Building Inmobiliaria en Argentina ¿Deseas tasar tu propiedad?"
         metaImg="https://inmobiliariabuilding.com.ar/images/breadcrumbs.avif"
-        preLoad="images/breadcrumbs.avif"
+        preLoad="/images/breadcrumbs.avif"
     >
         <HeaderWeb :heroPage="false" />
         <BreadCrums page="Inmuebles" path="inmuebles" />
@@ -193,7 +193,7 @@ const resetFilters = () => {
         </section>
 
         <section class="mb-4 mx-auto overflow-hidden px-10">
-            <div class="w-full mx-auto px-2 sm:px-4 pb-6 pt-4 md:pb-2 flex flex-column sm:flex-row flex-wrap items-center justify-end">
+            <div class="w-full mx-auto px-2 sm:px-4 pb-6 pt-4 md:pb-2 flex flex-column sm:flex-row flex-wrap items-center justify-center">
                 <button
                     data-drawer-target="drawer-navigation"
                     data-drawer-toggle="drawer-navigation"

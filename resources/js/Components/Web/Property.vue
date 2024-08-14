@@ -68,6 +68,10 @@ const props = defineProps({
     admin: {
         type: Boolean,
         required: true
+    },
+    province: {
+        type: String,
+        required: true
     }
 })
 const numberFormat = (numero)  => {
@@ -161,6 +165,9 @@ const iconesProperty = () => {
                     </span>
                     <figcaption class="absolute text-lg text-white top-4">
                         <p class="text-white bg-primary-web-700 px-4 font-medium dark:bg-gray-800">{{ props.status }}</p>
+                    </figcaption>
+                    <figcaption class="absolute text-sm -bottom-2 text-white">
+                        <p class="text-white bg-primary-web-700 px-3 pt-1 dark:bg-gray-800">{{ props.province }}</p>
                     </figcaption>
                     <figcaption class="absolute text-white -bottom-2 right-4 bg-primary-web-700 rounded px-2 pt-1 dark:bg-gray-800">
                         <span :class="['w-8 h-8', iconesProperty()]"></span>

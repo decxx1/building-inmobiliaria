@@ -19,6 +19,7 @@ const props = defineProps({
                         v-for="item in props.properties"
                         :key="item.id"
                         :id="item.id"
+                        :province="item.province"
                         :imageCover="item.currentImageCover"
                         :status="item.status"
                         :type="item.type"

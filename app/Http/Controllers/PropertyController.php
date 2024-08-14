@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Property;
 use App\Models\City;
 use App\Models\Zone;
@@ -15,12 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
@@ -28,7 +22,7 @@ class PropertyController extends Controller
     public function index(Request $request):Response
     {
 
-        $privinces = Province::all();
+        $provinces = Province::all();
         $types = Type::all();
         $statuses = Status::all();
         $antiquities = Antiquity::all();
@@ -124,7 +118,7 @@ class PropertyController extends Controller
             'properties' => $formattedProperties,
             'perPage' => $pagination->perPage(),
             'totalProperties' => $pagination->total(),
-            'provinces' => fn () => $privinces,
+            'provinces' => fn () => $provinces,
             'types' => fn () => $types,
             'statuses' => fn () => $statuses,
             'antiquities' => fn () => $antiquities,
@@ -190,7 +184,7 @@ class PropertyController extends Controller
 
     public function inmueblesWeb(Request $request):Response
     {
-        $privinces = Province::all();
+        $provinces = Province::all();
         $types = Type::all();
         $statuses = Status::all();
 
@@ -278,7 +272,7 @@ class PropertyController extends Controller
             'properties' => $formattedProperties,
             'perPage' => $pagination->perPage(),
             'totalProperties' => $pagination->total(),
-            'provinces' => fn () => $privinces,
+            'provinces' => fn () => $provinces,
             'types' => fn () => $types,
             'statuses' => fn () => $statuses,
         ]);

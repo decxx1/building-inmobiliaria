@@ -5,6 +5,7 @@
 /public/hot
 /public/avatars
 /public/images/properties
+/public/sitemap.xml
 /public/storage
 /storage/*.key
 /vendor

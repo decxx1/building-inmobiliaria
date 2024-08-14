@@ -590,6 +590,7 @@ const resetFilters = () => {
                                 v-for="item in props.properties"
                                 :key="item.id"
                                 :id="item.id"
+                                :province="item.province"
                                 :active="item.active"
                                 :imageCover="item.currentImageCover"
                                 :status="item.status"
