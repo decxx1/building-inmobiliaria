@@ -194,10 +194,10 @@ const iconesProperty = () => {
                         <img class="w-6 mr-1" src="/images/icons-property/superficie.svg" alt="superficie total de la propiedad" />
                         <span>{{ props.superficieTotal }} m2</span>
                     </div>
-                    <div v-if="props.superficieCubierta" class="flex flex-row items-center mr-3">
+                    <!-- <div v-if="props.superficieCubierta" class="flex flex-row items-center mr-3">
                         <img class="w-5 mr-1" src="/images/icons-property/superficie_cubierta.svg" alt="superficie cubierta de la propiedad" />
                         <span>{{ props.superficieCubierta }} m2</span>
-                    </div>
+                    </div> -->
                     <div v-if="props.banos && props.banos !== 'Indistinto'" class="flex flex-row items-center mr-3">
                         <img class="w-5 mr-1" src="/images/icons-property/bano2.svg" alt="baños que tiene la propiedad" />
                         <span>{{ props.banos }}</span>

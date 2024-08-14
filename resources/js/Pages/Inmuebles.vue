@@ -213,8 +213,8 @@ const resetFilters = () => {
 
             </div>
         </section>
-        <div class="grid gap-4 grid-cols-12 container mx-auto">
-            <div class="col-span-12 min-[1023px]:col-span-4 min-[1279px]:col-span-3 min-[1610px]:col-span-2">
+        <div class="grid gap-4 grid-cols-12 mx-auto max-w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-[1380px] 2xl:max-w-[1610px] ">
+            <div class="col-span-12 min-[1023px]:col-span-4 min-[1281px]:col-span-3 min-[1610px]:col-span-2">
                 <Sidebar>
                     <h5 id="drawer-navigation-label" class="text-base font-semibold text-primary-web-700 uppercase dark:text-gray-300 mb-4">Buscar</h5>
                     <div class="relative w-full mb-6">
@@ -305,7 +305,7 @@ const resetFilters = () => {
                     </section>
                 </Sidebar>
             </div>
-            <div class="auto-rows-max col-span-12 min-[1023px]:col-span-8 min-[1279px]:col-span-9 min-[1610px]:col-span-10 mx-auto grid min-[1610px]:grid-cols-4 min-[1279px]:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-2 gap-x-2 md:gap-x-4 justify-items-center">
+            <div class="auto-rows-max col-span-12 min-[1023px]:col-span-8 min-[1281px]:col-span-9 min-[1610px]:col-span-10 mx-auto grid min-[1610px]:grid-cols-4 min-[1281px]:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-2 gap-x-8 justify-items-center">
                 <Properties :properties="props.properties" />
             </div>
         </div>
